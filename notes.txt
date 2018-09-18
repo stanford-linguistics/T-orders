@@ -1,0 +1,87 @@
+Web App
+   /index.html
+
+API
+- POST /uploads
+    - attach file
+
+    - returns
+    {
+        result: {
+            id: 1,
+            status: 'queued'
+            link: null,
+            errorMessage:null
+        }
+    }
+
+- GET /results/1?wait=true
+    - returns
+    {
+        result: {
+            id: 1,
+            status: 'running'
+            link: null
+            errorMessage: null
+        }
+    }
+
+    {
+        result: {
+            id: 1,
+            status: 'completed'
+            link: /results/1/$value
+            errorMessage: null
+        }
+    }
+
+    {
+        result: {
+            id: 1,
+            status: 'error'
+            link: null
+            errorMessage: 'something did not look good'
+        }
+    }
+
+- GET /results/1/$value
+    - returns ZIP payload
+
+POST /uploads
+  - write file to disk
+  - write Result to Mongo
+  - enqueue message with path to file and id
+  - return 201 created with Result
+
+GET /results/:id
+  - return Result from Mongo
+
+GET /results/:id?wait=true
+  - if Result is completed or error, return
+  - otherwise respond when message comes from queue
+
+GET /results/:id/$value
+  - returns ZIP file for :id
+
+RabbitMQ
+  - write Result message to Mongo
+  - respond to any waiting requests for Result.id
+
+Result:
+{
+    id: 1,
+    filename: 'abc-finnish whatever.xls',
+    status: 'completed',
+    link: '/results/1/$value',
+    uploadTime: '',
+    errorMessage: null
+}
+
+
+Workers:
+- on message, send back "running"
+- chew chew chew
+- send updates?
+- write to /results/:id/filename.zip
+- send "completed"
+- schedule delete task

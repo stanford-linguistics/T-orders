@@ -1,0 +1,23 @@
+version: "3"
+services:
+  torders-app:
+    build: ./app
+    image: torders-app
+    ports:
+      - 2014:2014
+    command: --reload
+    volumes:
+      - ./uploads:/uploads
+      - ./results:/results
+      - ./app:/app
+    depends_on:
+      - mongo
+  mongo:
+    image: mongo:4
+    environment:
+      - MONGO_DATA_DB=/data
+      - MONGO_INITDB_DATABASE=torders
+    ports:
+      - 27017:27017
+    volumes:
+      - ./data:/data
