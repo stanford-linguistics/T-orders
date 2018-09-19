@@ -7,6 +7,7 @@ RUN apt-get update && apt-get upgrade -y
 
 COPY requirements.txt .
 COPY app.py .
+COPY worker.py .
 
 RUN pip install -r requirements.txt
 
