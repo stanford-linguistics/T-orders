@@ -1,21 +1,25 @@
 version: "3"
 services:
-  web:
+  torders-api:
     build:
       context: ./api
       dockerfile: Dockerfile
     restart: always
     ports:
      - "5001:5001"
+    volumes:
+     - ./results:/results
     depends_on:
       - redis
-  worker:
+  torders-worker:
     build:
       context: celery-queue
       dockerfile: Dockerfile
     depends_on:
       - redis
-  monitor:
+    volumes:
+     - ./results:/results
+  torders-worker-monitor:
     build:
       context: celery-queue
       dockerfile: Dockerfile
