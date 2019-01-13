@@ -32,8 +32,8 @@ import scipy.special
 import itertools
 import random
 from graphviz import Digraph    #https://media.readthedocs.org/pdf/graphviz/latest/graphviz.pdf
-
-
+import argparse
+import os
 
 
 #=================================================================================================
@@ -59,11 +59,64 @@ from graphviz import Digraph    #https://media.readthedocs.org/pdf/graphviz/late
 ##appear in the first sheet of the input excel file.
 #=================================================================================================
 
-excel_fname = sys.argv[1]
+
+#=================================================================================================
+
+# usage: t_orders.py [-h] [-o FILEPATH] FILE
+
+# Compute T-orders in constraint-based phonology
+
+# positional arguments:
+#  FILE                  input excel file
+
+# optional arguments:
+#  -h, --help            show this help message and exit
+#  -o FILEPATH, --output FILEPATH
+#                        output path for results (default: current script directory)
+
+
+#=================================================================================================
+
+## Type for argparse - checks that file exists but does not open.
+
+def Extant_file(x):
+    if not os.path.exists(x):
+        raise argparse.ArgumentTypeError("{0} does not exist".format(x))
+    return x
+
+def Validate_arguments() :
+    parser = argparse.ArgumentParser(description='Compute T-orders in constraint-based phonology')
+    parser.add_argument("input", help="input excel file", metavar="FILE", type=Extant_file)
+    parser.add_argument("-o", "--output", dest="output_directory", help="output path for results (default: current script directory)", metavar="FILEPATH")
+    args = parser.parse_args()
+    return args
+
+def Create_directory(directory):
+    if not os.path.exists(directory):
+        os.makedirs(directory)
+
+def Get_script_directory():
+    absolute_path = os.path.abspath(__file__)
+    return os.path.dirname(absolute_path)
+
+def Set_output_directory(args):
+    directory = args.output_directory
+    if directory:
+        Create_directory(directory)
+        return directory
+    else:
+        return Get_script_directory()
+
+#=================================================================================================
+#=================================================================================================
+
+args = Validate_arguments()
+
+excel_fname = args.input
 excel_data = xlrd.open_workbook(excel_fname)
 excel_data_sheet = excel_data.sheet_by_index(0)
 
-
+output_prefix = Set_output_directory(args) + "/"
 
 #=================================================================================================
 #=================================================================================================
@@ -896,7 +949,7 @@ cases = [ set(), set(), set(), set(), set(), set(), set(), set(), set(), set(), 
 #=================================================================================================
 #=================================================================================================
 
-DO = open("[2]-Description_of_Torders.txt","w+")
+DO = open(output_prefix + "[2]-Description_of_Torders.txt","w+")
 
 DO.write('===========================================================================================================\n')
 DO.write('BEGINNING OF FILE\n')
@@ -966,7 +1019,7 @@ DO.close()
 #=================================================================================================
 #=================================================================================================
 
-CO = open("[1]-List_of_Torders.txt","w+")
+CO = open(output_prefix + "[1]-List_of_Torders.txt","w+")
 
 CO.write('=============================================================================\n')
 CO.write('BEGINNING OF FILE\n')
@@ -1072,7 +1125,7 @@ for entailment in set_OT_Torders_with_OT_UNfeasible_but_HG_feasible_antecedent :
 #=================================================================================================
 #=================================================================================================
 
-UNFEASIBLE = open("[3]-List_of_unfeasible_mappings.txt","w+")
+UNFEASIBLE = open(output_prefix + "[3]-List_of_unfeasible_mappings.txt","w+")
 
 UNFEASIBLE.write('=============================================================================\n')
 UNFEASIBLE.write('BEGINNING OF FILE\n')
@@ -1434,7 +1487,8 @@ def Produce_graph(superset_of_entailments, subset_of_entailments, set_of_special
     #Closes the graph
     comment = 'label = "LEGEND: ' + legend + '"'
     GRAPH.body.append(comment)
-    GRAPH.view()
+    #GRAPH.view()
+    GRAPH.save()
 
 
 
@@ -1447,7 +1501,7 @@ def Produce_graph(superset_of_entailments, subset_of_entailments, set_of_special
 superset_of_entailments = Split(set_OT_Torders_with_OT_feasible_antecedent)
 subset_of_entailments = Split(set_OT_Torders_with_OT_feasible_antecedent)
 set_of_special_mappings = set()
-file_name = '[4]-Plot_of_OT_Torder'
+file_name = output_prefix + '[4]-Plot_of_OT_Torder'
 legend = 'Only OT feasible mappings are considered;\nsolid boxes are OT cycles;\nlines represent arrows from top to bottom;\nsolid arrows are OT entailments;\narrows entailed by transitivity are omitted.'
 Produce_graph(superset_of_entailments, subset_of_entailments, set_of_special_mappings, file_name, legend)
 
@@ -1467,7 +1521,7 @@ for entailment in set_OT_Torders_with_OT_feasible_antecedent.union(set_OT_Torder
 superset_of_entailments = Split(set_HG_entailments_with_HG_feasible_antecedent)
 subset_of_entailments = Split(set_HG_entailments_with_HG_feasible_antecedent)
 set_of_special_mappings = set()
-file_name = '[5]-Plot_of_HG_Torder'
+file_name = output_prefix + '[5]-Plot_of_HG_Torder'
 legend = 'Only HG feasible mappings are considered;\nsolid boxes are HG cycles;\nlines represent arrows from top to bottom;\nsolid arrows are HG entailments\narrows entailed by transitivity are omitted.'
 Produce_graph(superset_of_entailments, subset_of_entailments, set_of_special_mappings, file_name, legend)
 
@@ -1490,7 +1544,7 @@ for entailment in set_OT_Torders_with_OT_feasible_antecedent.union(set_OT_Torder
 superset_of_entailments = Split(set_ME_entailments)
 subset_of_entailments = Split(set_ME_entailments)
 set_of_special_mappings = set_of_HG_unfeasible_mappings
-file_name = '[6]-Plot_of_ME_Torder'
+file_name = output_prefix + '[6]-Plot_of_ME_Torder'
 legend = 'All mappings are considered (both HG feasible and unfeasible);\nred mappings are HG unfeasible;\nsolid boxes are ME cycles;\nlines represent arrows from top to bottom;\nsolid arrows are ME entailments;\nlines entailed by transitivity are omitted.'
 Produce_graph(superset_of_entailments, subset_of_entailments, set_of_special_mappings, file_name, legend)
 
@@ -1507,7 +1561,7 @@ Produce_graph(superset_of_entailments, subset_of_entailments, set_of_special_map
 superset_of_entailments = Split(set_OT_Torders_with_OT_feasible_antecedent.union(set_OT_Torders_with_OT_UNfeasible_but_HG_feasible_antecedent))
 subset_of_entailments = Split(set_HG_entailments_with_HG_feasible_antecedent)
 set_of_special_mappings = set_of_HG_feasible_but_OT_unfeasible_mappings
-file_name = '[7]-Plot_of_OT_versus_HG_Torders'
+file_name = output_prefix + '[7]-Plot_of_OT_versus_HG_Torders'
 legend = 'Only HG feasible mappings are considered;\nred mappings are HG feasible but OT unfeasible;\nsolid boxes are HG (and therefore also OT) cycles;\ndotted boxes are OT cycles which fail in HG;\nlines represent arrows from top to bottom;\nsolid lines are HG (and therefore also OT) entailments;\nsolid lines entailed by transitivity are omitted;\ndotted arrows are HG entailments which fail in OT.'
 Produce_graph(superset_of_entailments, subset_of_entailments, set_of_special_mappings, file_name, legend)
 
@@ -1528,7 +1582,7 @@ for entailment in set_OT_Torders_with_OT_feasible_antecedent.union(set_OT_Torder
 superset_of_entailments = Split(set_HG_entailments_with_HG_feasible_antecedent)
 subset_of_entailments = Split(set_ME_entailments_with_HG_feasible_antecedent)
 set_of_special_mappings = set()
-file_name = '[8]-Plot_of_HG_versus_ME_Torders_only_HG_feasible_mappings'
+file_name = output_prefix + '[8]-Plot_of_HG_versus_ME_Torders_only_HG_feasible_mappings'
 legend = 'Only HG feasible mappings are considered;\nsolid boxes are ME (and therefore also HG) cycles;\ndotted boxes are HG cycles which fail in ME;\nlines represent arrows from top to bottom;\nsolid lines are ME (and therefore also HG) entailments;\nsolid lines entailed by transitivity are omitted;\ndotted lines are HG entailments which fail in ME.'
 Produce_graph(superset_of_entailments, subset_of_entailments, set_of_special_mappings, file_name, legend)
 
@@ -1550,7 +1604,7 @@ for entailment in set_OT_Torders_with_OT_feasible_antecedent.union(set_OT_Torder
 superset_of_entailments = Split(set_HG_entailments_with_HG_feasible_or_unfeasible_antecedent)
 subset_of_entailments = Split(set_ME_entailments)
 set_of_special_mappings = set_of_HG_unfeasible_mappings
-file_name = '[9]-Plot_of_HG_versus_ME_Torders_including_HG_unfeasible_mappings'
+file_name = output_prefix + '[9]-Plot_of_HG_versus_ME_Torders_including_HG_unfeasible_mappings'
 legend = 'All mappings are considered, both HG feasible and unfeasible;\nred mappings are HG unfeasible;\nsolid boxes are ME (and therefore also HG) cycles;\ndotted boxes are HG cycles which fail in ME;\nlines represent arrows from top to bottom;\nsolid lines are ME (and therefore also HG) entailments;\nsolid lines entailed by transitiviy are omitted;\ndotted lines are HG entailments which fail in ME.'
 Produce_graph(superset_of_entailments, subset_of_entailments, set_of_special_mappings, file_name, legend)
 
