@@ -7,7 +7,7 @@ ENV C_FORCE_ROOT true
 COPY . /queue
 WORKDIR /queue
 
-RUN apt-get update &&  apt-get upgrade -y && apt-get install -y \
+RUN apt-get update && apt-get upgrade -y && apt-get install -y \
   graphviz \
   xdg-utils
 
