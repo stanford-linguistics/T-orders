@@ -5,7 +5,7 @@ Software for computing T-orders in constraint-based phonology
 ### Installation
 
 ```bash
-git clone https://github.com/mattkohl/docker-flask-celery-redis
+git clone https://github.com/T-orders/T-orders
 ```
 
 ### Build & Launch
@@ -42,5 +42,3 @@ If you would like to change the endpoints, update the code in [api/app.py](api/a
 Task changes should happen in [queue/tasks.py](celery-queue/tasks.py) 
 
 ---
-
-adapted from [https://github.com/mattkohl/docker-flask-celery-redis](https://github.com/mattkohl/docker-flask-celery-redis)
