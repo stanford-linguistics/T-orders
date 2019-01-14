@@ -1,5 +1,5 @@
 import os
-from flask import Flask, flash, request, redirect, url_for, send_from_directory, jsonify, json
+from flask import Flask, flash, request, redirect, url_for, send_from_directory, jsonify, json, make_response
 from flask_api import status
 from werkzeug.utils import secure_filename
 from worker import celery
@@ -60,7 +60,7 @@ def upload_file():
                                 input_file_path, filename], kwargs={}, task_id=file_id)
 
         link = url_for('check_task', task_id=task.id, external=True)
-        return jsonify(id=task.id, status=task.state, link=link, errorMessage=None)
+        return make_response(jsonify(id=task.id, status=task.state, link=link, errorMessage=None), 201)
 
 
 def get_zip_filename(directory):
@@ -97,4 +97,4 @@ def check_task(task_id: str) -> str:
     if res.state == states.FAILURE:
         errorMessage = str(res.result)
 
-    return jsonify(id=task_id, status=res.state, link=link, errorMessage=None)
+    return make_response(jsonify(id=task_id, status=res.state, link=link, errorMessage=None), 200)
