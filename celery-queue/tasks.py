@@ -44,14 +44,9 @@ def get_download_url(folder_id):
 
 @celery.task(name='tasks.compute_t_orders', bind=True)
 def compute_t_orders(self, input_file_path, input_filename):
+    self.update_state(state='RUNNING')
     folder_id = self.request.id
     call_t_order(input_file_path, get_output_path(folder_id))
     zip_results(input_filename, folder_id)
     clean_results(folder_id)
     return get_download_url(folder_id)
-
-
-@celery.task(name='tasks.add')
-def add(x, y):
-    time.sleep(5)
-    return x + y

@@ -1,5 +1,5 @@
 import os
-from flask import Flask, flash, request, redirect, url_for, send_from_directory
+from flask import Flask, flash, request, redirect, url_for, send_from_directory, jsonify, json
 from flask_api import status
 from werkzeug.utils import secure_filename
 from worker import celery
@@ -59,8 +59,8 @@ def upload_file():
         task = celery.send_task('tasks.compute_t_orders', args=[
                                 input_file_path, filename], kwargs={}, task_id=file_id)
 
-        response = f"<a href='{url_for('check_task', task_id=task.id, external=True)}'>check status of {task.id}</a>"
-        return response
+        link = url_for('check_task', task_id=task.id, external=True)
+        return jsonify(id=task.id, status=task.state, link=link, errorMessage=None)
 
 
 def get_zip_filename(directory):
@@ -89,7 +89,12 @@ def download_file(task_id):
 @app.route('/results/<string:task_id>')
 def check_task(task_id: str) -> str:
     res = celery.AsyncResult(task_id)
-    if res.state == states.PENDING:
-        return res.state
-    else:
-        return str(res.result)
+    link = None
+    errorMessage = None
+    if res.state == states.SUCCESS: 
+        link = url_for('download_file', task_id=task_id, external=True)
+
+    if res.state == states.FAILURE:
+        errorMessage = str(res.result)
+
+    return jsonify(id=task_id, status=res.state, link=link, errorMessage=None)
