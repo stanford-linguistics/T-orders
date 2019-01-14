@@ -33,8 +33,7 @@ def save_file_to_disk(file, file_id):
     filename = secure_filename(file.filename)
     input_file_path = os.path.join(app.config['RESULTS_FOLDER'], file_id, 'input', filename)
     file.save(input_file_path)
-    return input_file_path
-
+    return input_file_path, filename
 
 @app.route('/uploads', methods=['POST'])
 def upload_file():
@@ -48,19 +47,17 @@ def upload_file():
     else:
         file = request.files['file']
         file_id = uuid()
-        input_file_path = save_file_to_disk(file, file_id)
-        task = celery.send_task('tasks.compute_t_orders', args=[input_file_path], kwargs={}, task_id=file_id)
+        input_file_path, filename = save_file_to_disk(file, file_id)
+        task = celery.send_task('tasks.compute_t_orders', args=[input_file_path, filename], kwargs={}, task_id=file_id)
  
         response = f"<a href='{url_for('check_task', task_id=task.id, external=True)}'>check status of {task.id}</a>"
         return response
-
 
 @app.route('/add/<int:param1>/<int:param2>')
 def add(param1: int, param2: int) -> str:
     task = celery.send_task('tasks.add', args=[param1, param2], kwargs={})
     response = f"<a href='{url_for('check_task', task_id=task.id, external=True)}'>check status of {task.id} </a>"
     return response
-
 
 @app.route('/check/<string:task_id>')
 def check_task(task_id: str) -> str:
