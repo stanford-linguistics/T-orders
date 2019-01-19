@@ -11,8 +11,6 @@
 ##4) give the option to only plot the dotted lines (no solid lines) in the comparison graphs
 ##5) The LEGEND still says "arrows". Perhaps make that "lines" now that there are no arrows?
 ##6) The script still produces only pdfs. Could that be changed to png (optionally)?
-##7) The script still appears to try to open windows for the results, which fails on my server. Could that feature be suppressed (optionally)?
-
 
 
 #=================================================================================================
@@ -57,37 +55,68 @@ import os
 ##rather than a zero (the script interprets as a zero any empty cell
 ##starting from the fourth column). The script assumes that these data
 ##appear in the first sheet of the input excel file.
-#=================================================================================================
-
 
 #=================================================================================================
-
-# usage: t_orders.py [-h] [-o FILEPATH] FILE
-
+# usage: t_orders.py [-h] [-o <FILEPATH>] [--hg-feasible-mappings-only]
+#                    [--print-enteilment]
+#                    [--optimization-method [{simplex,interior-point}]]
+#                    [--bound-on-number-of-candidates <INTEGER>]
+#                    [--num-trials <INTEGER>] [--weight-bound <INTEGER>]
+#                    [--include-arrows]
+#                    <FILEPATH>
+#
 # Compute T-orders in constraint-based phonology
-
+#
 # positional arguments:
-#  FILE                  input excel file
-
+#   <FILEPATH>            input excel file
+#
 # optional arguments:
-#  -h, --help            show this help message and exit
-#  -o FILEPATH, --output FILEPATH
-#                        output path for results (default: current script directory)
-
-
+#   -h, --help            show this help message and exit
+#   -o <FILEPATH>, --output <FILEPATH>
+#                         output path for results (default: current script directory)
+#   --hg-feasible-mappings-only
+#                         Set HG feasible mappings only (default: False)
+#   --print-enteilment    Print the current enteiment to the console (default:
+#                         False)
+#   --optimization-method [{simplex,interior-point}]
+#                         The optimization method to use (default: simplex)
+#   --bound-on-number-of-candidates <INTEGER>
+#                         Bound on number of candidates for checking ME
+#                         nontrivial sufficient condition (default: 10)
+#   --num-trials <INTEGER>
+#                         Number of trials for ME random counterexample
+#                         (default: 10000)
+#   --weight-bound <INTEGER>
+#                         Weight bound for ME random counterexample (default: 20)
+#   --include-arrows      Include arrows entailed transitivity in plots (default: False)
 #=================================================================================================
 
-## Type for argparse - checks that file exists but does not open.
+def Extant_file(value):
+    ## Type for argparse - checks that file exists but does not open.
+    if not os.path.exists(value):
+        raise argparse.ArgumentTypeError("{0} does not exist".format(value))
+    return value
 
-def Extant_file(x):
-    if not os.path.exists(x):
-        raise argparse.ArgumentTypeError("{0} does not exist".format(x))
-    return x
+def Replace_dashes_with_underscores(string):
+    return string.replace("-", "_")
+
+def check_positive(value):
+    ivalue = int(value)
+    if ivalue <= 0:
+        raise argparse.ArgumentTypeError("%s is an invalid positive int value" % value)
+    return ivalue
 
 def Validate_arguments() :
     parser = argparse.ArgumentParser(description='Compute T-orders in constraint-based phonology')
-    parser.add_argument("input", help="input excel file", metavar="FILE", type=Extant_file)
-    parser.add_argument("-o", "--output", dest="output_directory", help="output path for results (default: current script directory)", metavar="FILEPATH")
+    parser.add_argument("input", help="input excel file", metavar="<FILEPATH>", type=Extant_file)
+    parser.add_argument("-o", "--output", dest="output_directory", help="output path for results (default: current script directory)", metavar="<FILEPATH>")
+    parser.add_argument("--hg-feasible-mappings-only", dest="HG_feasible_mappings_only", default=False, action='store_true', help="Set HG feasible mappings only (default: False)")
+    parser.add_argument("--print-enteilment", dest="print_current_enteilment", default=False, action='store_true', help="Print the current enteiment to the console (default: False)")
+    parser.add_argument("--optimization-method", dest="optimization_method", nargs='?', default='simplex', choices=['simplex','interior-point'], help="The optimization method to use (default: simplex)")
+    parser.add_argument("--bound-on-number-of-candidates", dest="bound_on_number_of_candidates_for_checking_ME_nontrivial_sufficient_condition", default=10, type=check_positive, help="Bound on number of candidates for checking ME nontrivial sufficient condition (default: 10)", metavar="<INTEGER>")
+    parser.add_argument("--num-trials", dest="number_of_trials_for_ME_random_counterexample", default=10000, type=check_positive, help="Number of trials for ME random counterexample (default: 10000)", metavar="<INTEGER>")
+    parser.add_argument("--weight-bound", dest="weight_bound_for_ME_random_counterexample", default=20, type=check_positive, help="Weight bound for ME random counterexample (default: 20)", metavar="<INTEGER>")
+    parser.add_argument("--include-arrows", dest="omit_arrows_entailed_transitivity_in_plots", default=True, action='store_false', help="Include arrows entailed transitivity in plots (default: False)")
     args = parser.parse_args()
     return args
 
@@ -99,15 +128,14 @@ def Get_script_directory():
     absolute_path = os.path.abspath(__file__)
     return os.path.dirname(absolute_path)
 
-def Set_output_directory(args):
-    directory = args.output_directory
+def Set_output_directory(directory):
     if directory:
         Create_directory(directory)
         return directory
     else:
         return Get_script_directory()
-
 #=================================================================================================
+# Entrypoint
 #=================================================================================================
 
 args = Validate_arguments()
@@ -116,18 +144,17 @@ excel_fname = args.input
 excel_data = xlrd.open_workbook(excel_fname)
 excel_data_sheet = excel_data.sheet_by_index(0)
 
-output_prefix = Set_output_directory(args) + "/"
-
 #=================================================================================================
+# Optional parameters
 #=================================================================================================
-
-only_HG_feasible_mappings = False
-print_the_current_enteilment = False
-optimization_method = 'simplex'     #In some cases, it is better toreplace 'simplex' with 'interior-point'
-bound_on_number_of_candidates_for_checking_ME_nontrivial_sufficient_condition = 10
-number_of_trials_for_ME_random_counterexample = 10000
-weight_bound_for_ME_random_counterexample = 20
-omit_arrows_entailed_transitivity_in_plots = True
+output_prefix = Set_output_directory(args.output_directory) + "/"
+only_HG_feasible_mappings = args.HG_feasible_mappings_only
+print_the_current_enteilment = args.print_current_enteilment
+optimization_method = args.optimization_method #In some cases, it is better toreplace 'simplex' with 'interior-point'
+bound_on_number_of_candidates_for_checking_ME_nontrivial_sufficient_condition = args.bound_on_number_of_candidates_for_checking_ME_nontrivial_sufficient_condition
+number_of_trials_for_ME_random_counterexample = args.number_of_trials_for_ME_random_counterexample
+weight_bound_for_ME_random_counterexample = args.weight_bound_for_ME_random_counterexample
+omit_arrows_entailed_transitivity_in_plots = args.omit_arrows_entailed_transitivity_in_plots
 
 
 #=================================================================================================
