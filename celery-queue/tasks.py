@@ -3,6 +3,8 @@ import time
 from celery import Celery
 import results_helper
 
+ONE_HOUR = 1 * 60 * 60
+T_ORDER_TTL = ONE_HOUR
 RESULTS_FOLDER = '/results'
 
 CELERY_BROKER_URL = os.environ.get(
@@ -37,7 +39,10 @@ def clean_results(folder_id):
     directory_to_clean = get_task_results_path(folder_id)
     results_helper.clean_directory(os.path.join(directory_to_clean, 'input'))
     results_helper.clean_directory(os.path.join(directory_to_clean, 'output'))
+    queue_delete_t_order(folder_id)
 
+def queue_delete_t_order(folder_id);
+    celery.send_task("tasks.delete_t_order", args=[folder_id], kwargs={}, countdown=T_ORDER_TTL)
 
 def get_download_url(folder_id):
     return '/results/' + folder_id + '/$value?external=True'
@@ -50,3 +55,9 @@ def compute_t_orders(self, input_file_path, input_filename):
     zip_results(input_filename, folder_id)
     clean_results(folder_id)
     return get_download_url(folder_id)
+
+@celery.task(name='tasks.delete_t_order')
+def delete_t_order_directory(folder_id):
+    directory_to_delete = get_task_results_path(folder_id)
+    results_helper.clean_directory(directory_to_delete)
+
