@@ -42,7 +42,8 @@ def get_optional_args(hg_feasible_mappings_only, optimization_method, bound_on_n
 def call_t_order(input_file_path, output_path, hg_feasible_mappings_only, optimization_method, bound_on_number_of_candidates, num_trials, weight_bound, include_arrows):
     optional_args = get_optional_args(hg_feasible_mappings_only, optimization_method,
                                       bound_on_number_of_candidates, num_trials, weight_bound, include_arrows)
-    t_order_command = 'python t_orders.py ' + input_file_path + ' --output ' + output_path + ' ' + optional_args
+    t_order_command = 'python t_orders.py ' + input_file_path + \
+        ' --output ' + output_path + ' ' + optional_args
     os.system(t_order_command)
 
 
@@ -55,8 +56,11 @@ def zip_results(input_filename, folder_id):
     zip_name = os.path.splitext(input_filename)[0] + '.zip'
     results_helper.zip_all(directory_to_zip, zip_name)
 
+
 def queue_delete_folder(folder_id):
-    celery.send_task("tasks.delete_folder", args=[folder_id], kwargs={}, countdown=FOLDER_TTL)
+    celery.send_task("tasks.delete_folder", args=[
+                     folder_id], kwargs={}, countdown=FOLDER_TTL)
+
 
 def clean_results(folder_id):
     directory_to_clean = get_task_results_path(folder_id)

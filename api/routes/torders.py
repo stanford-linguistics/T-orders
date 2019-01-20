@@ -17,6 +17,7 @@ schema = {
     }
 }
 
+
 def get_filename(directory, extension):
     filename = ''
     for file in os.listdir(directory):
@@ -44,7 +45,8 @@ def write_script_params_to_file(directory, params):
 def compute_t_order(folder_id):
     directory = os.path.join(app.config['RESULTS_FOLDER'], folder_id, 'input')
     if directory_exists(directory):
-        input_filename = get_filename(directory, app.config['INPUT_FILE_EXTENSION'])
+        input_filename = get_filename(
+            directory, app.config['INPUT_FILE_EXTENSION'])
         if input_filename != '':
             params = request.get_json()
             write_script_params_to_file(directory, params)
@@ -64,4 +66,3 @@ def compute_t_order(folder_id):
             return 'No file belonging to id: ' + folder_id + ' was found.', HTTP_404_NOT_FOUND
     else:
         return 'No file belonging to id: ' + folder_id + ' was found.', HTTP_404_NOT_FOUND
-

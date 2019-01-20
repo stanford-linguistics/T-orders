@@ -5,6 +5,7 @@ from worker import celery
 import celery.states as states
 import os
 
+
 def get_filename(directory, extension):
     filename = ''
     for file in os.listdir(directory):
@@ -21,12 +22,12 @@ def directory_exists(directory):
         return False
 
 
-
 @routes.route('/results/<string:task_id>/$value', methods=['GET'])
 def download_file(task_id):
     directory = os.path.join(app.config['RESULTS_FOLDER'], task_id)
     if directory_exists(directory):
-        zip_filename = get_filename(directory, app.config['OUTPUT_FILE_EXTENSION'])
+        zip_filename = get_filename(
+            directory, app.config['OUTPUT_FILE_EXTENSION'])
         if zip_filename != '':
             return send_from_directory(directory, zip_filename, as_attachment=True)
         else:

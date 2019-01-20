@@ -11,6 +11,7 @@ ONE_DAY = 1 * 60 * 60 * 24
 THREE_DAYS = ONE_DAY * 3
 FOLDER_TTL = THREE_DAYS
 
+
 def no_file_was_uploaded(files):
     return 'file' not in files
 
@@ -37,9 +38,11 @@ def save_file_to_disk(input_directory, file):
     file.save(input_file_path)
     return filename
 
+
 def queue_delete_folder(folder_id):
     celery.send_task("tasks.delete_folder", args=[
                      folder_id], kwargs={}, countdown=FOLDER_TTL)
+
 
 @routes.route('/uploads', methods=['POST'])
 def upload_file():
@@ -52,7 +55,8 @@ def upload_file():
     else:
         file = request.files['file']
         file_id = uuid()
-        input_directory = os.path.join(app.config['RESULTS_FOLDER'], file_id, 'input')
+        input_directory = os.path.join(
+            app.config['RESULTS_FOLDER'], file_id, 'input')
         filename = save_file_to_disk(input_directory, file)
         queue_delete_folder(file_id)
         return make_response(jsonify(id=file_id, filename=filename, TTLSeconds=FOLDER_TTL), 201)
