@@ -1,8 +1,9 @@
 import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/es/integration/react';
 import { ConnectedRouter } from 'connected-react-router';
-import store, { history } from './store';
+import store, { history, persistor } from './store';
 import App from './components/app';
 
 import 'sanitize.css/sanitize.css';
@@ -10,13 +11,22 @@ import './index.css';
 
 const target = document.querySelector('#root');
 
+const onBeforeLift = () => {
+  // take some action before the gate lifts
+};
+
 render(
   <Provider store={store}>
-    <ConnectedRouter history={history}>
-      <div>
-        <App />
-      </div>
-    </ConnectedRouter>
+    <PersistGate
+      loading={null}
+      onBeforeLift={onBeforeLift}
+      persistor={persistor}>
+      <ConnectedRouter history={history}>
+        <div>
+          <App />
+        </div>
+      </ConnectedRouter>
+    </PersistGate>
   </Provider>,
   target
 );

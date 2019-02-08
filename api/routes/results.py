@@ -50,6 +50,9 @@ def check_task(task_id: str) -> str:
             expiresOn = result['expires_on']
         else:
             status = 'EXPIRED'
+            result = json.loads(res.result)
+            expiresIn = result['expires_in']
+            expiresOn = result['expires_on']
 
     if res.state == states.PENDING:
         if directory_exists(task_id):

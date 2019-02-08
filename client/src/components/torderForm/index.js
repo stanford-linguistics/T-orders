@@ -4,7 +4,12 @@ import {
   Popover,
   FormGroup,
   FormControl,
-  Form
+  Form,
+  Button,
+  Collapse,
+  Container,
+  Row,
+  Col
 } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faQuestionCircle } from '@fortawesome/free-solid-svg-icons';
@@ -13,29 +18,19 @@ class TorderForm extends Component {
   constructor(props, context) {
     super(props, context);
 
-    this.handleShow = this.handleShow.bind(this);
-    this.handleClose = this.handleClose.bind(this);
-
     this.state = {
-      show: false,
-      open: false,
-      hgMappingsOnly: false,
-      displayArrows: false
+      openOptionalConfiguration: false,
+      validated: false
     };
   }
-  handleClose() {
-    this.setState({ show: false });
-  }
-
-  handleShow() {
-    this.setState({ show: true });
-  }
-
-  handleCheckBoxChanged = e => {
-    this.setState({ [e.target.name]: e.target.checked });
-  };
 
   render() {
+    const { openOptionalConfiguration } = this.state;
+    const displayOptimizationMethodPopover = (
+      <Popover id="popover-trigger-hover-focus" title="Optimization method">
+        This is the popover text for the optimization method.
+      </Popover>
+    );
     const displayInputFilePopover = (
       <Popover id="popover-trigger-hover-focus" title="Input file">
         <em>The input file must be in an excel format.</em>
@@ -74,142 +69,185 @@ class TorderForm extends Component {
     );
     return (
       <div>
-        <form>
+        <Form noValidate validated={this.state.validated}>
           <FormGroup controlId="torderNameControls">
-            <Form.Label>Name</Form.Label>
+            <Form.Label>Name (Optional)</Form.Label>
             <FormControl
               type="text"
-              placeholder="Enter a name for this T-order"
-            />
-          </FormGroup>
-          <FormGroup controlId="torderDescriptionControls">
-            <Form.Label>Description</Form.Label>
-            <FormControl
-              componentClass="textarea"
-              placeholder="Enter description"
+              name="name"
+              onChange={this.props.handleInputChange}
+              placeholder="Enter a name for this t-order"
             />
           </FormGroup>
           <FormGroup>
-            <Form.Label>Input file</Form.Label>
+            <Container>
+              <Row>
+                <Col>
+                  <Form.Label>Input file</Form.Label>
+                  <OverlayTrigger
+                    trigger={['hover', 'focus']}
+                    placement="right"
+                    overlay={displayInputFilePopover}>
+                    <FontAwesomeIcon
+                      icon={faQuestionCircle}
+                      className="torder-info-icon"
+                    />
+                  </OverlayTrigger>
+                </Col>
+                <Col>
+                  <a href={process.env.PUBLIC_URL + '/sample.xls'} download>
+                    Sample input file
+                  </a>
+                </Col>
+              </Row>
+            </Container>
 
-            <OverlayTrigger
-              trigger={['hover', 'focus']}
-              placement="right"
-              overlay={displayInputFilePopover}>
-              <FontAwesomeIcon
-                icon={faQuestionCircle}
-                className="torder-info-icon"
-              />
-            </OverlayTrigger>
-            <a href={process.env.PUBLIC_URL + '/sample.txt'} download>
-              Sample input file
-            </a>
-            <Form.Control type="file" />
+            <Form.Control
+              type="file"
+              required
+              accept="application/vnd.ms-excel"
+              onChange={this.props.addFile}
+            />
           </FormGroup>
 
           <br />
-          <Form.Group controlId="torderForm.optimizationMethod">
-            <Form.Label>Optimization method</Form.Label>
-            <Form.Control defaultValue="simplex" as="select">
-              <option>simplex</option>
-              <option>interior-point</option>
-            </Form.Control>
-          </Form.Group>
-          <FormGroup controlId="candidatesBoundControls">
-            <Form.Label>Bound on number of candidates</Form.Label>
-            <OverlayTrigger
-              trigger={['hover', 'focus']}
-              placement="right"
-              overlay={displayCandidatesBoundPopover}>
-              <FontAwesomeIcon
-                icon={faQuestionCircle}
-                className="torder-info-icon"
-              />
-            </OverlayTrigger>
-            <FormControl
-              defaultValue={10}
-              min={0}
-              type="number"
-              placeholder="Enter bound"
-            />
-          </FormGroup>
-          <FormGroup controlId="numTrialsControls">
-            <Form.Label>Number of trials</Form.Label>
-            <OverlayTrigger
-              trigger={['hover', 'focus']}
-              placement="right"
-              overlay={displayNumTrialsPopover}>
-              <FontAwesomeIcon
-                icon={faQuestionCircle}
-                className="torder-info-icon"
-              />
-            </OverlayTrigger>
-            <FormControl
-              defaultValue={1000}
-              min={0}
-              type="number"
-              placeholder="Enter number of trials"
-            />
-          </FormGroup>
-          <FormGroup controlId="weightBoundControls">
-            <Form.Label>Weight bound</Form.Label>
-            <OverlayTrigger
-              trigger={['hover', 'focus']}
-              placement="right"
-              overlay={displayWeightBoundPopover}>
-              <FontAwesomeIcon
-                icon={faQuestionCircle}
-                className="torder-info-icon"
-              />
-            </OverlayTrigger>
-            <FormControl
-              defaultValue={20}
-              min={0}
-              type="number"
-              placeholder="Enter weight bound"
-            />
-          </FormGroup>
-          <FormGroup>
-            <Form.Check
-              id="hgMappingsOnlyCheckbox"
-              name="hgMappingsOnly"
-              type="checkbox"
-              label="Hg feasible mappings only"
-              inline
-              checked={this.state.hgMappingsOnly}
-              onChange={this.handleCheckBoxChanged}
-            />
-            <OverlayTrigger
-              trigger={['hover', 'focus']}
-              placement="right"
-              overlay={displayHGMappingsPopover}>
-              <FontAwesomeIcon
-                icon={faQuestionCircle}
-                className="torder-info-icon"
-              />
-            </OverlayTrigger>
-          </FormGroup>
-          <FormGroup>
-            <Form.Check
-              name="displayArrows"
-              id="displayArrowsCheckbox"
-              type="checkbox"
-              label="Display arrows"
-              inline
-              checked={this.state.displayArrows}
-              onChange={this.handleCheckBoxChanged}
-            />
-            <OverlayTrigger
-              trigger={['hover', 'focus']}
-              placement="right"
-              overlay={displayDisplayArrowsPopover}>
-              <FontAwesomeIcon
-                icon={faQuestionCircle}
-                className="torder-info-icon"
-              />
-            </OverlayTrigger>
-          </FormGroup>
-        </form>
+          <Button
+            variant="link"
+            onClick={() =>
+              this.setState({
+                openOptionalConfiguration: !openOptionalConfiguration
+              })
+            }
+            aria-controls="optional-configuration"
+            aria-expanded={openOptionalConfiguration}>
+            Optional Configuration
+          </Button>
+          <Collapse in={this.state.openOptionalConfiguration}>
+            <Container id="optional-configuration">
+              <hr />
+              <Form.Group controlId="torderForm.optimizationMethod">
+                <Form.Label>Optimization method</Form.Label>
+                <OverlayTrigger
+                  trigger={['hover', 'focus']}
+                  placement="right"
+                  overlay={displayOptimizationMethodPopover}>
+                  <FontAwesomeIcon
+                    icon={faQuestionCircle}
+                    className="torder-info-icon"
+                  />
+                </OverlayTrigger>
+                <Form.Control
+                  defaultValue="simplex"
+                  as="select"
+                  name="optimizationMethod"
+                  onChange={this.props.handleInputChange}>
+                  <option>simplex</option>
+                  <option>interior-point</option>
+                </Form.Control>
+              </Form.Group>
+              <FormGroup controlId="candidatesBoundControls">
+                <Form.Label>Bound on number of candidates</Form.Label>
+                <OverlayTrigger
+                  trigger={['hover', 'focus']}
+                  placement="right"
+                  overlay={displayCandidatesBoundPopover}>
+                  <FontAwesomeIcon
+                    icon={faQuestionCircle}
+                    className="torder-info-icon"
+                  />
+                </OverlayTrigger>
+                <FormControl
+                  defaultValue={10}
+                  min={0}
+                  type="number"
+                  name="candidatesBound"
+                  onChange={this.props.handleInputChange}
+                  placeholder="Enter bound"
+                />
+              </FormGroup>
+              <FormGroup controlId="numTrialsControls">
+                <Form.Label>Number of trials</Form.Label>
+                <OverlayTrigger
+                  trigger={['hover', 'focus']}
+                  placement="right"
+                  overlay={displayNumTrialsPopover}>
+                  <FontAwesomeIcon
+                    icon={faQuestionCircle}
+                    className="torder-info-icon"
+                  />
+                </OverlayTrigger>
+                <FormControl
+                  defaultValue={1000}
+                  min={0}
+                  type="number"
+                  name="numTrials"
+                  onChange={this.props.handleInputChange}
+                  placeholder="Enter number of trials"
+                />
+              </FormGroup>
+              <FormGroup controlId="weightBoundControls">
+                <Form.Label>Weight bound</Form.Label>
+                <OverlayTrigger
+                  trigger={['hover', 'focus']}
+                  placement="right"
+                  overlay={displayWeightBoundPopover}>
+                  <FontAwesomeIcon
+                    icon={faQuestionCircle}
+                    className="torder-info-icon"
+                  />
+                </OverlayTrigger>
+                <FormControl
+                  defaultValue={20}
+                  min={0}
+                  name="weightBound"
+                  onChange={this.props.handleInputChange}
+                  type="number"
+                  placeholder="Enter weight bound"
+                />
+              </FormGroup>
+              <FormGroup>
+                <Form.Check
+                  id="hgMappingsOnlyCheckbox"
+                  name="hgMappingsOnly"
+                  type="checkbox"
+                  label="Hg feasible mappings only"
+                  inline
+                  checked={this.props.hgMappingsOnly}
+                  onChange={this.props.handleCheckBoxChanged}
+                />
+                <OverlayTrigger
+                  trigger={['hover', 'focus']}
+                  placement="right"
+                  overlay={displayHGMappingsPopover}>
+                  <FontAwesomeIcon
+                    icon={faQuestionCircle}
+                    className="torder-info-icon"
+                  />
+                </OverlayTrigger>
+              </FormGroup>
+              <FormGroup>
+                <Form.Check
+                  name="displayArrows"
+                  id="displayArrowsCheckbox"
+                  type="checkbox"
+                  label="Display arrows"
+                  inline
+                  checked={this.props.displayArrows}
+                  onChange={this.props.handleCheckBoxChanged}
+                />
+                <OverlayTrigger
+                  trigger={['hover', 'focus']}
+                  placement="right"
+                  overlay={displayDisplayArrowsPopover}>
+                  <FontAwesomeIcon
+                    icon={faQuestionCircle}
+                    className="torder-info-icon"
+                  />
+                </OverlayTrigger>
+              </FormGroup>
+            </Container>
+          </Collapse>
+        </Form>
       </div>
     );
   }

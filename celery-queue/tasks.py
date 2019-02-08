@@ -7,7 +7,8 @@ import json
 
 ONE_HOUR = 1 * 60 * 60
 ONE_DAY = ONE_HOUR * 24
-FOLDER_TTL = ONE_DAY * 3
+#FOLDER_TTL = ONE_DAY * 3
+FOLDER_TTL = 5 * 60
 RESULTS_FOLDER = '/results'
 
 CELERY_BROKER_URL = os.environ.get(

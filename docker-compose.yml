@@ -29,5 +29,12 @@ services:
     command:  -A tasks --port=5555 --broker=redis://redis:6379/0
     depends_on:
       - redis
+  torders-client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+     - "80:80"
   redis:
     image: redis

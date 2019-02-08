@@ -1,6 +1,5 @@
 import { combineReducers } from 'redux';
-import counter from './counter';
+import settings from './settings';
+import torders from './dataService/torders';
 
-export default combineReducers({
-  counter
-});
+export default combineReducers({ settings, torders });

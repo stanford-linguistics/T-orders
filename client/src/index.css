@@ -3,9 +3,24 @@ html {
   height: 100%;
 }
 
+body {
+  font-family: 'Roboto Slab', serif !important;
+}
+
 /* body {
   padding-top: 40px; // Needed for when navbar is fixed to top
 } */
+
+a,
+a:hover {
+  color: #a6192e;
+}
+
+h1,
+h2,
+h3 {
+  font-family: 'Raleway', sans-serif;
+}
 
 .background-image {
   background-image: url('../src/assets/images/dustin-lee-19667-unsplash.jpg');

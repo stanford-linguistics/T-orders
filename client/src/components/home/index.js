@@ -3,7 +3,7 @@ import { push } from 'connected-react-router';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Jumbotron, Container, Button } from 'react-bootstrap';
-import TorderModal from '../torderModal';
+import TorderFormContainer from '../../containers/torderFormContainer';
 
 const Home = props => (
   <Container className="h-100 d-flex">
@@ -18,7 +18,7 @@ const Home = props => (
           tincidunt et arcu. Duis vitae imperdiet nisi. In felis tortor.
         </p>
 
-        <TorderModal />
+        <TorderFormContainer />
 
         <Button
           variant="primary"
