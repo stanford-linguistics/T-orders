@@ -8,6 +8,8 @@ import os
 schema = {
     'type': 'object',
     'properties': {
+        'name': {'type': 'string', "default": ""},
+        'description': {'type': 'string', "default": ""},
         'hgFeasibleMappingsOnly': {'type': 'boolean', "default": False},
         'optimizationMethod': {'type': 'string', "enum": ["simplex", "interior-point"], "default": "simplex"},
         'boundOnNumberOfCandidates': {'type': 'number', "default": 10},
@@ -49,6 +51,11 @@ def compute_t_order(folder_id):
             directory, app.config['INPUT_FILE_EXTENSION'])
         if input_filename != '':
             params = request.get_json()
+            if params['name']:
+                name = params['name']
+            else:
+                name = input_filename
+
             write_script_params_to_file(directory, params)
             input_file_path = os.path.join(directory, input_filename)
             task = celery.send_task('tasks.compute_t_orders', args=[
@@ -60,8 +67,8 @@ def compute_t_order(folder_id):
                                     params['numTrials'],
                                     params['weightBound'],
                                     params['includeArrows']], kwargs={}, task_id=folder_id)
-            link = url_for('routes.check_task', task_id=task.id, external=True)
-            return make_response(jsonify(id=task.id, status=task.state, link=link, errorMessage=None), 201)
+            link = url_for('routes.check_task', task_id=task.id, _external=True)
+            return make_response(jsonify(id=task.id, name=name, description=params['description'], status=task.state, link=link, errorMessage=None, params=params), 201)
         else:
             return 'No file belonging to id: ' + folder_id + ' was found.', HTTP_404_NOT_FOUND
     else:

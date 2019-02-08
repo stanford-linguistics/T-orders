@@ -2,10 +2,12 @@ import os
 import time
 from celery import Celery
 import results_helper
+import datetime
+import json
 
 ONE_HOUR = 1 * 60 * 60
-ONE_DAY = ONE_HOUR * 2
-FOLDER_TTL = ONE_DAY
+ONE_DAY = ONE_HOUR * 24
+FOLDER_TTL = ONE_DAY * 3
 RESULTS_FOLDER = '/results'
 
 CELERY_BROKER_URL = os.environ.get(
@@ -15,6 +17,15 @@ CELERY_RESULT_BACKEND = os.environ.get(
 
 celery = Celery('tasks', broker=CELERY_BROKER_URL,
                 backend=CELERY_RESULT_BACKEND)
+
+class Result:
+    def __init__(self, download_url, expires_in, expires_on):
+        self.download_url = download_url
+        self.expires_in = expires_in
+        self.expires_on = expires_on
+
+    def toJSON(self):
+        return json.dumps(self, default=lambda o: o.__dict__, sort_keys=True, indent=4)
 
 
 def get_output_path(folder_id):
@@ -72,6 +83,13 @@ def clean_results(folder_id):
 def get_download_url(folder_id):
     return '/results/' + folder_id + '/$value?external=True'
 
+def get_expiration_on():
+    current_datetime = datetime.datetime.now()
+    delta = datetime.timedelta(seconds=FOLDER_TTL)
+    epoch = datetime.datetime.utcfromtimestamp(0)
+    expiration_date = current_datetime + delta
+    return int((expiration_date - epoch).total_seconds())
+
 
 @celery.task(name='tasks.compute_t_orders', bind=True)
 def compute_t_orders(self, input_file_path,
@@ -87,8 +105,9 @@ def compute_t_orders(self, input_file_path,
     call_t_order(input_file_path, get_output_path(folder_id), hg_feasible_mappings_only,
                  optimization_method, bound_on_number_of_candidates, num_trials, weight_bound, include_arrows)
     zip_results(input_filename, folder_id)
+    result = Result(get_download_url(folder_id), FOLDER_TTL, get_expiration_on())
     clean_results(folder_id)
-    return get_download_url(folder_id)
+    return result.toJSON()
 
 
 @celery.task(name='tasks.delete_folder')
