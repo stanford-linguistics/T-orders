@@ -17,16 +17,16 @@ class TorderFormContainer extends Component {
     this.shouldDisableSubmit = this.shouldDisableSubmit.bind(this);
 
     this.state = {
+      showModal: false,
+      validated: false,
       name: '',
       inputFile: null,
-      optimizationMethod: 'simplex',
-      candidatesBound: 10,
-      numTrials: 1000,
-      weightBound: 20,
-      hgMappingsOnly: false,
-      displayArrows: false,
-      showModal: false,
-      validated: false
+      optimizationMethod: this.props.preferredSettings.optimizationMethod,
+      candidatesBound: this.props.preferredSettings.boundOnNumberOfCandidates,
+      numTrials: this.props.preferredSettings.numTrials,
+      weightBound: this.props.preferredSettings.weightBound,
+      hgMappingsOnly: this.props.preferredSettings.hgFeasibleMappingsOnly,
+      displayArrows: this.props.preferredSettings.includeArrows
     };
   }
 
@@ -59,13 +59,13 @@ class TorderFormContainer extends Component {
     this.setState({
       name: '',
       inputFile: null,
-      optimizationMethod: 'simplex',
-      candidatesBound: 10,
-      numTrials: 1000,
-      weightBound: 20,
-      hgMappingsOnly: false,
-      displayArrows: false,
-      validated: false
+      validated: false,
+      optimizationMethod: this.props.preferredSettings.optimizationMethod,
+      candidatesBound: this.props.preferredSettings.boundOnNumberOfCandidates,
+      numTrials: this.props.preferredSettings.numTrials,
+      weightBound: this.props.preferredSettings.weightBound,
+      hgMappingsOnly: this.props.preferredSettings.hgFeasibleMappingsOnly,
+      displayArrows: this.props.preferredSettings.includeArrows
     });
   };
 
@@ -74,6 +74,9 @@ class TorderFormContainer extends Component {
   };
 
   toggleModal() {
+    if (!this.state.showModal) {
+      this.resetState();
+    }
     this.setState({ showModal: !this.state.showModal });
   }
 
@@ -98,9 +101,14 @@ class TorderFormContainer extends Component {
         submitTorderRequest={this.submitTorderRequest}
         shouldDisableSubmit={this.shouldDisableSubmit}>
         <TorderForm
+          preferredSettings={this.props.preferredSettings}
           validated={this.state.validated}
           addFile={this.addFile}
           handleInputChange={this.handleInputChange}
+          optimizationMethod={this.state.optimizationMethod}
+          candidatesBound={this.state.candidatesBound}
+          numTrials={this.state.numTrials}
+          weightBound={this.state.weightBound}
           hgMappingsOnly={this.state.hgMappingsOnly}
           displayArrows={this.state.displayArrows}
           handleCheckBoxChanged={this.handleCheckBoxChanged}
@@ -110,7 +118,10 @@ class TorderFormContainer extends Component {
   }
 }
 
-const mapStateToProps = ({ torders }) => ({ fileId: torders.fileId });
+const mapStateToProps = ({ torders, settings }) => ({
+  fileId: torders.fileId,
+  preferredSettings: settings.preferredComputeSettings
+});
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(

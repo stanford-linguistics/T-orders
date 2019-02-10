@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Navbar, Nav } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
-import Settings from '../settings';
+import Settings from '../../containers/settings';
 
 class TorderNavbar extends Component {
   state = {
