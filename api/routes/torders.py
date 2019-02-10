@@ -20,12 +20,13 @@ schema = {
 }
 
 
-def get_filename(directory, extension):
+def get_filename(directory, allowed_extensions):
     filename = ''
     for file in os.listdir(directory):
-        if file.endswith(extension):
+        if file.rsplit('.', 1)[1].lower() in allowed_extensions:
             filename = file
             break
+            
     return filename
 
 
@@ -48,7 +49,7 @@ def compute_t_order(folder_id):
     directory = os.path.join(app.config['RESULTS_FOLDER'], folder_id, 'input')
     if directory_exists(directory):
         input_filename = get_filename(
-            directory, app.config['INPUT_FILE_EXTENSION'])
+            directory, app.config['ALLOWED_EXTENSIONS'])
         if input_filename != '':
             params = request.get_json()
             if params['name']:

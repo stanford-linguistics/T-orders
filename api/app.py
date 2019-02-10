@@ -7,7 +7,7 @@ from routes import *
 RESULTS_FOLDER = '/results'
 INPUT_FILE_EXTENSION = '.xls'
 OUTPUT_FILE_EXTENSION = '.zip'
-ALLOWED_EXTENSIONS = set(['xls'])
+ALLOWED_EXTENSIONS = set(['xls', 'xlsx'])
 
 app = Flask(__name__)
 CORS(app)

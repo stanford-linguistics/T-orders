@@ -16,18 +16,30 @@ import OptionalConfigForm from '../optionalConfigForm';
 class TorderForm extends Component {
   constructor(props, context) {
     super(props, context);
-
-    this.state = {
-      openOptionalConfiguration: false,
-      validated: false
-    };
+    this.computeForm = React.createRef();
   }
 
+  optionalInputsAreValid = () => {
+    var that = this;
+    if (this.props.validated && this.computeForm.current) {
+      return (
+        that.computeForm.current['optimizationMethod'].checkValidity() &&
+        that.computeForm.current['candidatesBound'].checkValidity() &&
+        that.computeForm.current['numTrials'].checkValidity() &&
+        that.computeForm.current['weightBound'].checkValidity()
+      );
+    }
+    return true;
+  };
+
   render() {
-    const { openOptionalConfiguration } = this.state;
     return (
       <div>
-        <Form noValidate validated={this.state.validated}>
+        <Form
+          ref={this.computeForm}
+          validated={this.props.validated}
+          noValidate
+          id="compute-form">
           <FormGroup controlId="torderNameControls">
             <Form.Label>Name (Optional)</Form.Label>
             <FormControl
@@ -60,24 +72,25 @@ class TorderForm extends Component {
             <Form.Control
               type="file"
               required
-              accept="application/vnd.ms-excel"
+              accept=".xls,.xlsx, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel"
               onChange={this.props.addFile}
+              isInvalid={!this.props.isValidFileType()}
             />
+            <Form.Control.Feedback type="invalid">
+              Please upload an excel file having extensions .xls/.xlsx only.
+            </Form.Control.Feedback>
           </FormGroup>
 
           <br />
           <Button
             variant="link"
-            onClick={() =>
-              this.setState({
-                openOptionalConfiguration: !openOptionalConfiguration
-              })
-            }
+            onClick={this.props.toggleShowOptionalConfigs}
+            disabled={!this.optionalInputsAreValid()}
             aria-controls="optional-configuration"
-            aria-expanded={openOptionalConfiguration}>
+            aria-expanded={this.props.showOptionalConfigs}>
             Optional Configuration
           </Button>
-          <Collapse in={this.state.openOptionalConfiguration}>
+          <Collapse in={this.props.showOptionalConfigs}>
             <Container id="optional-configuration">
               <OptionalConfigForm
                 preferredSettings={this.props.preferredSettings}

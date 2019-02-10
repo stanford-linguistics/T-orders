@@ -28,6 +28,7 @@ class Settings extends Component {
       showModal: false,
       openPanel: false,
       currentPanel: null,
+      validated: false,
       optimizationMethod: this.props.preferredSettings.optimizationMethod,
       candidatesBound: this.props.preferredSettings.boundOnNumberOfCandidates,
       numTrials: this.props.preferredSettings.numTrials,
@@ -64,18 +65,23 @@ class Settings extends Component {
     this.setState({ [e.target.name]: e.target.checked });
   };
 
-  setPreferredConfig = () => {
-    var config = {
-      hgFeasibleMappingsOnly: this.state.hgMappingsOnly,
-      optimizationMethod: this.state.optimizationMethod,
-      boundOnNumberOfCandidates: Number(this.state.candidatesBound),
-      numTrials: Number(this.state.numTrials),
-      weightBound: Number(this.state.weightBound),
-      includeArrows: this.state.displayArrows
-    };
+  setPreferredConfig = form => {
+    if (form.checkValidity() === true) {
+      var config = {
+        hgFeasibleMappingsOnly: this.state.hgMappingsOnly,
+        optimizationMethod: this.state.optimizationMethod,
+        boundOnNumberOfCandidates: Number(this.state.candidatesBound),
+        numTrials: Number(this.state.numTrials),
+        weightBound: Number(this.state.weightBound),
+        includeArrows: this.state.displayArrows
+      };
 
-    this.props.setPreferredTorderConfig(config);
-    this.displaySuccessToast('Your settings have been successfully saved.');
+      this.setState({ validated: false });
+      this.props.setPreferredTorderConfig(config);
+      form.reset();
+      this.displaySuccessToast('Your settings have been successfully saved.');
+    }
+    this.setState({ validated: true });
   };
 
   resetConfig = () => {
@@ -127,6 +133,7 @@ class Settings extends Component {
             weightBound={this.state.weightBound}
             hgMappingsOnly={this.state.hgMappingsOnly}
             displayArrows={this.state.displayArrows}
+            validated={this.state.validated}
           />
         </SettingsModal>
         <ToastContainer

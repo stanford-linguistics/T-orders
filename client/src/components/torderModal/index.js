@@ -24,10 +24,14 @@ function TorderModal(props) {
             Cancel
           </Button>
           <Button
+            form="compute-form"
             variant="primary"
             className="torder-compute-btn"
-            disabled={props.shouldDisableSubmit()}
-            onClick={props.submitTorderRequest}>
+            onClick={() => {
+              props.submitTorderRequest(
+                document.getElementById('compute-form')
+              );
+            }}>
             <span>Submit</span>
           </Button>
         </Modal.Footer>

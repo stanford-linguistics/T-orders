@@ -13,6 +13,7 @@ function OptionalConfigForm(props) {
           This is the popover text for the optimization method.
         </QuestionTooltip>
         <Form.Control
+          required
           as="select"
           name="optimizationMethod"
           value={props.optimizationMethod}
@@ -29,13 +30,17 @@ function OptionalConfigForm(props) {
         </QuestionTooltip>
 
         <FormControl
-          min={0}
+          required
+          min={1}
           type="number"
           name="candidatesBound"
           value={props.candidatesBound}
           onChange={props.handleInputChange}
           placeholder="Enter bound"
         />
+        <Form.Control.Feedback type="invalid">
+          Please enter a value greater than 0.
+        </Form.Control.Feedback>
       </FormGroup>
 
       <FormGroup controlId="numTrialsControls">
@@ -45,13 +50,17 @@ function OptionalConfigForm(props) {
         </QuestionTooltip>
 
         <FormControl
-          min={0}
+          required
+          min={1}
           type="number"
           name="numTrials"
           value={props.numTrials}
           onChange={props.handleInputChange}
           placeholder="Enter number of trials"
         />
+        <Form.Control.Feedback type="invalid">
+          Please enter a value greater than 0.
+        </Form.Control.Feedback>
       </FormGroup>
 
       <FormGroup controlId="weightBoundControls">
@@ -60,13 +69,17 @@ function OptionalConfigForm(props) {
           This is the popover text for the Weight bound.
         </QuestionTooltip>
         <FormControl
-          min={0}
+          required
+          min={1}
           name="weightBound"
           onChange={props.handleInputChange}
           type="number"
           value={props.weightBound}
           placeholder="Enter weight bound"
         />
+        <Form.Control.Feedback type="invalid">
+          Please enter a value greater than 0.
+        </Form.Control.Feedback>
       </FormGroup>
 
       <FormGroup>

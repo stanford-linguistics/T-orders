@@ -1,6 +1,6 @@
 import React from 'react';
 import Panel from '../panel';
-import { Button, Card } from 'react-bootstrap';
+import { Button, Card, Form } from 'react-bootstrap';
 import OptionalConfigForm from '../optionalConfigForm';
 
 function ComputeTorderPanel(props) {
@@ -13,30 +13,36 @@ function ComputeTorderPanel(props) {
       currentPanel={props.currentPanel}
       openPanel={props.openPanel}>
       <Card.Text>Set your preferred settings when computing t-orders</Card.Text>
-
-      <OptionalConfigForm
-        preferredSettings={props.preferredSettings}
-        handleInputChange={props.handleInputChange}
-        handleCheckBoxChanged={props.handleCheckBoxChanged}
-        optimizationMethod={props.optimizationMethod}
-        candidatesBound={props.candidatesBound}
-        numTrials={props.numTrials}
-        weightBound={props.weightBound}
-        hgMappingsOnly={props.hgMappingsOnly}
-        displayArrows={props.displayArrows}
-      />
-      <Button
-        variant="primary"
-        className="torder-compute-btn"
-        onClick={props.resetConfig}>
-        <span>Reset to default</span>
-      </Button>
-      <Button
-        variant="primary"
-        className="torder-compute-btn"
-        onClick={props.setPreferredConfig}>
-        <span>Save</span>
-      </Button>
+      <Form validated={props.validated} noValidate id="preferred-compute-form">
+        <OptionalConfigForm
+          preferredSettings={props.preferredSettings}
+          handleInputChange={props.handleInputChange}
+          handleCheckBoxChanged={props.handleCheckBoxChanged}
+          optimizationMethod={props.optimizationMethod}
+          candidatesBound={props.candidatesBound}
+          numTrials={props.numTrials}
+          weightBound={props.weightBound}
+          hgMappingsOnly={props.hgMappingsOnly}
+          displayArrows={props.displayArrows}
+        />
+        <Button
+          variant="primary"
+          className="torder-compute-btn"
+          onClick={props.resetConfig}>
+          <span>Reset to default</span>
+        </Button>
+        <Button
+          form="preferred-compute-form"
+          variant="primary"
+          className="torder-compute-btn"
+          onClick={() =>
+            props.setPreferredConfig(
+              document.getElementById('preferred-compute-form')
+            )
+          }>
+          <span>Save</span>
+        </Button>
+      </Form>
     </Panel>
   );
 }

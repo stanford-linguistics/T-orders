@@ -14,13 +14,14 @@ class TorderFormContainer extends Component {
     this.addFile = this.addFile.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
     this.toggleModal = this.toggleModal.bind(this);
-    this.shouldDisableSubmit = this.shouldDisableSubmit.bind(this);
+    this.isValidFileType = this.isValidFileType.bind(this);
 
     this.state = {
       showModal: false,
       validated: false,
       name: '',
       inputFile: null,
+      showOptionalConfigs: false,
       optimizationMethod: this.props.preferredSettings.optimizationMethod,
       candidatesBound: this.props.preferredSettings.boundOnNumberOfCandidates,
       numTrials: this.props.preferredSettings.numTrials,
@@ -38,21 +39,62 @@ class TorderFormContainer extends Component {
     this.setState({ inputFile: event.target.files[0] });
   };
 
-  submitTorderRequest = event => {
-    var config = {
-      name: this.state.name,
-      description: this.state.description,
-      hgFeasibleMappingsOnly: this.state.hgMappingsOnly,
-      optimizationMethod: this.state.optimizationMethod,
-      boundOnNumberOfCandidates: Number(this.state.candidatesBound),
-      numTrials: Number(this.state.numTrials),
-      weightBound: Number(this.state.weightBound),
-      includeArrows: this.state.displayArrows
-    };
-    this.props.computeTorder(this.state.inputFile, config);
-    this.resetState();
-    this.toggleModal();
-    this.props.changePage('/my-t-orders');
+  isValidFileType = () => {
+    if (this.state.inputFile) {
+      var extension = getExtension(this.state.inputFile.name);
+      return (
+        extension.toLowerCase() === 'xls' || extension.toLowerCase() === 'xlsx'
+      );
+    }
+    return true;
+
+    function getExtension(filename) {
+      var parts = filename.split('.');
+      return parts[parts.length - 1];
+    }
+  };
+
+  submitTorderRequest = form => {
+    if (form.checkValidity() === true && this.isValidFileType()) {
+      var config = {
+        name: this.state.name,
+        description: this.state.description,
+        hgFeasibleMappingsOnly: this.state.hgMappingsOnly,
+        optimizationMethod: this.state.optimizationMethod,
+        boundOnNumberOfCandidates: Number(this.state.candidatesBound),
+        numTrials: Number(this.state.numTrials),
+        weightBound: Number(this.state.weightBound),
+        includeArrows: this.state.displayArrows
+      };
+      this.props.computeTorder(this.state.inputFile, config);
+      this.resetState();
+      this.toggleModal();
+      this.props.changePage('/my-t-orders');
+    }
+    this.setState({
+      validated: true
+    });
+
+    if (!optionalInputsAreValid()) {
+      this.setState({
+        showOptionalConfigs: true
+      });
+    }
+
+    function optionalInputsAreValid() {
+      return (
+        form['optimizationMethod'].checkValidity() &&
+        form['candidatesBound'].checkValidity() &&
+        form['numTrials'].checkValidity() &&
+        form['weightBound'].checkValidity()
+      );
+    }
+  };
+
+  toggleShowOptionalConfigs = () => {
+    this.setState({
+      showOptionalConfigs: !this.state.showOptionalConfigs
+    });
   };
 
   resetState = () => {
@@ -80,26 +122,12 @@ class TorderFormContainer extends Component {
     this.setState({ showModal: !this.state.showModal });
   }
 
-  shouldDisableSubmit = () => {
-    if (this.state.inputFile) {
-      var extension = getExtension(this.state.inputFile.name);
-      return extension.toLowerCase() !== 'xls';
-    }
-    return true;
-
-    function getExtension(filename) {
-      var parts = filename.split('.');
-      return parts[parts.length - 1];
-    }
-  };
-
   render() {
     return (
       <TorderModal
         showModal={this.state.showModal}
         toggleModal={this.toggleModal}
-        submitTorderRequest={this.submitTorderRequest}
-        shouldDisableSubmit={this.shouldDisableSubmit}>
+        submitTorderRequest={this.submitTorderRequest}>
         <TorderForm
           preferredSettings={this.props.preferredSettings}
           validated={this.state.validated}
@@ -112,6 +140,10 @@ class TorderFormContainer extends Component {
           hgMappingsOnly={this.state.hgMappingsOnly}
           displayArrows={this.state.displayArrows}
           handleCheckBoxChanged={this.handleCheckBoxChanged}
+          submitTorderRequest={this.submitTorderRequest}
+          isValidFileType={this.isValidFileType}
+          showOptionalConfigs={this.state.showOptionalConfigs}
+          toggleShowOptionalConfigs={this.toggleShowOptionalConfigs}
         />
       </TorderModal>
     );
