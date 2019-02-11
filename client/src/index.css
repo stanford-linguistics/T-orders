@@ -1,72 +1,7 @@
-body,
-html {
-  height: 100%;
-}
-
-body {
-  font-family: 'Roboto Slab', serif !important;
-}
-
-/* body {
-  padding-top: 40px; // Needed for when navbar is fixed to top
-} */
-
-a,
-a:hover {
-  color: #a6192e;
-}
-
-h1,
-h2,
-h3 {
-  font-family: 'Raleway', sans-serif;
-}
-
-.background-image {
-  background-image: url('../src/assets/images/dustin-lee-19667-unsplash.jpg');
+#torder-main-container {
   height: 100vh;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
 }
 
-div.jumbotron.torder-jumbotron {
-  margin-top: 20%;
-  background-color: rgba(236, 240, 241, 0.85);
-  /* background-color: #22665780 !important; */
-  text-align: center;
-}
-
-.torder-compute-btn,
-.torder-compute-btn:active,
-.torder-compute-btn:visited {
-  background-color: #226657 !important;
-  border-color: rgb(34, 102, 87) !important;
-  margin: 0.5%;
-}
-
-.torder-compute-btn:hover {
-  background-color: rgba(69, 245, 207, 0) !important;
-  color: black;
-}
-
-svg.svg-inline--fa.fa-question-circle.fa-w-16.torder-info-icon {
-  padding: 4px;
-  font-size: 20px;
-}
-
-.torder-docs {
-  height: 100%;
-  padding: 140px;
-  margin-top: 10%;
-  background-color: rgba(236, 240, 241, 0.85);
-}
-
-.torder-my-torder {
-  border-radius: 6px;
-}
-
-.list-group-item.active {
-  background-color: #226657 !important;
-  border-color: #226657 !important;
+#global-footer .container {
+  padding-bottom: 0;
 }
