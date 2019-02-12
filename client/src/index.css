@@ -1,7 +1,171 @@
+body {
+  font-family: 'Source Sans Pro', sans-serif;
+  /* background-color: #fbfbf9; */
+  /* background-color: #544948; */
+  /* background-color: #2f2424; */
+  /* background-color: #f9f6ef; */
+}
+
+.sticky-nav {
+  position: sticky;
+  top: 0;
+}
+
+h1,
+h2,
+h3 {
+  font-family: 'Source Serif Pro', serif;
+}
+
+p {
+  font-family: 'Source Sans Pro', sans-serif;
+}
+
+/* button {
+  font-family: 'Crimson Text', serif;
+} */
+
+a {
+  color: #820000;
+}
+a:hover {
+  color: black;
+}
+
 #torder-main-container {
-  height: 100vh;
+  /* height: 100vh; */
 }
 
 #global-footer .container {
   padding-bottom: 0;
+  /* margin-top: 4em; */
+}
+
+#torder-home-headline {
+  color: #8c1515;
+  font-family: 'Crimson Text', serif;
+}
+
+.torder-settings-btn {
+  background-color: rgba(0, 0, 0, 0);
+  border: none;
+}
+
+.torder-settings-btn:hover {
+  background-color: #8c1515;
+  border: none;
+}
+
+.torder-home-main-container {
+  min-height: 850px;
+  height: 100vh;
+  background-image: url('../src/assets/images/background.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.torder-docs-main-container {
+  background-image: url('../src/assets/images/shattered.png');
+  background-repeat: repeat;
+}
+
+.torder-my-torders-main-container {
+  background-image: url('../src/assets/images/graphy.png');
+  background-repeat: repeat;
+  height: 100vh;
+}
+
+#torder-home-container {
+  margin-top: 10em;
+}
+
+#torder-home-content {
+  text-align: center;
+}
+
+#torder-home-content h1 {
+  margin-top: 0;
+  font-size: 3em;
+}
+
+#torder-home-content p {
+  padding: 0 3em;
+  margin-bottom: 3em;
+}
+
+.torder-home-bg-color {
+  background-color: #f4f4f4bb;
+}
+
+#torder-mytorders-container {
+  margin-top: 10em;
+  width: 800px;
+  background-color: #f4f4f4bb;
+}
+
+#torder-mytorders-table {
+  max-height: 500px;
+  overflow: auto;
+}
+
+.torder-primary-btn {
+  background-color: #343a40 !important;
+  border: none;
+  margin: 5px;
+  color: #fff !important;
+}
+
+.torder-primary-btn:hover {
+  background-color: #8c1515 !important;
+  border: none;
+  margin: 5px;
+  /* color: #8c1515; */
+}
+
+.torder-secondary-btn {
+  background-color: #343a4000 !important;
+  border: 1px solid #343a40;
+  color: #343a40;
+  margin: 5px;
+}
+
+.torder-secondary-btn:hover {
+  /* background-color: #343a4000 !important; */
+  border: 1px solid #343a40;
+  /* color: #343a40; */
+  color: #8c1515;
+  margin: 5px;
+}
+
+#torder-learn-more,
+#torder-compute {
+  display: inline-block;
+  vertical-align: top;
+}
+
+#torder-docs-container {
+  margin-top: 4em;
+  padding: 4rem;
+  background-color: #f4f4f4;
+  margin-bottom: 4em;
+}
+
+.torder-docs-section {
+  padding-top: 55px;
+}
+
+#torder-glossary-content {
+  overflow: scroll;
+  max-height: 450px;
+}
+
+.list-group-item.active {
+  background-color: #8c1515;
+  border-color: black !important;
+}
+
+svg.svg-inline--fa.fa-question-circle.fa-w-16.torder-info-icon {
+  padding: 4px;
+  font-size: 20px;
 }

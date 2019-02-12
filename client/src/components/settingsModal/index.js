@@ -6,7 +6,10 @@ import { faCog } from '@fortawesome/free-solid-svg-icons';
 function SettingsModal(props) {
   return (
     <div>
-      <Button className="torder-compute-btn" onClick={props.toggleModal}>
+      <Button
+        className="torder-settings-btn"
+        title="Settings"
+        onClick={props.toggleModal}>
         <FontAwesomeIcon icon={faCog} />
       </Button>
       <Modal show={props.showModal} onHide={props.toggleModal}>

@@ -5,8 +5,6 @@ import { Container, Modal, Button, Table } from 'react-bootstrap';
 import TorderFormContainer from '../../containers/torderFormContainer';
 import { updateTorder, deleteTorder } from '../../modules/dataService/torders';
 import MyTorderTable from '../myTordersTable';
-// import Moment from 'react-moment';
-// import 'moment-timezone';
 
 class MyTorders extends Component {
   constructor(props, context) {
@@ -112,33 +110,34 @@ class MyTorders extends Component {
 
   render() {
     return (
-      <Container className="torder-docs">
-        <div id="my-torders" className="torder-my-torder">
-          <h2>My T-orders</h2>
+      <Container id="torder-mytorders-container">
+        <h2>My T-orders</h2>
+        <Container>
           {this.props.torders.length > 0 && (
-            <p>
-              These are your recent T-orders. Please note that T-orders will
-              expire after three days.
-            </p>
-          )}
-
-          {this.props.torders.length > 0 && (
-            <MyTorderTable
-              torders={this.props.torders}
-              removeTorder={this.removeTorder}
-              viewTorder={this.viewTorder}
-            />
+            <div>
+              <p>
+                These are your recent T-orders. Please note that T-orders will
+                expire after three days.
+              </p>
+              <TorderFormContainer />
+              <MyTorderTable
+                torders={this.props.torders}
+                removeTorder={this.removeTorder}
+                viewTorder={this.viewTorder}
+              />
+            </div>
           )}
           {this.props.torders <= 0 && (
             <div>
-              <span>
+              <p>
                 You do not have any recent T-orders. Click the button below to
                 get started.
-              </span>
+              </p>
               <TorderFormContainer />
             </div>
           )}
-        </div>
+        </Container>
+
         <Modal
           show={this.state.showModal}
           onHide={this.toggleModal}

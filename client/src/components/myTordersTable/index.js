@@ -5,7 +5,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faDownload,
   faTrashAlt,
-  faListAlt
+  faListAlt,
+  faArrowCircleDown
 } from '@fortawesome/free-solid-svg-icons';
 import TorderFormContainer from '../../containers/torderFormContainer';
 import Moment from 'react-moment';
@@ -13,8 +14,8 @@ import 'moment-timezone';
 
 function MyTorderTable(props) {
   return (
-    <Container>
-      <TorderFormContainer />
+    <Container id="torder-mytorders-table">
+      {/* <TorderFormContainer /> */}
       <Table responsive striped bordered hover>
         <thead>
           <tr>
@@ -56,7 +57,8 @@ function MyTorderTable(props) {
                       {torder.status === 'SUCCESS' && (
                         <div>
                           <a
-                            className="btn torder-compute-btn"
+                            title="Download"
+                            className="btn torder-primary-btn"
                             role="button"
                             href={torder.link}
                             download>
@@ -65,14 +67,15 @@ function MyTorderTable(props) {
                         </div>
                       )}
                       {torder.status !== 'SUCCESS' && (
-                        <Button className="torder-compute-btn" disabled>
+                        <Button className="torder-primary-btn" disabled>
                           <FontAwesomeIcon icon={faDownload} />
                         </Button>
                       )}
                     </Col>
                     <Col>
                       <Button
-                        className="torder-compute-btn"
+                        title="View Details"
+                        className="torder-primary-btn"
                         value={torder}
                         onClick={() => props.viewTorder(torder)}>
                         <FontAwesomeIcon icon={faListAlt} />
@@ -80,7 +83,8 @@ function MyTorderTable(props) {
                     </Col>
                     <Col>
                       <Button
-                        className="torder-compute-btn"
+                        title="delete"
+                        className="torder-primary-btn"
                         value={torder}
                         onClick={() => props.removeTorder(torder)}>
                         <FontAwesomeIcon icon={faTrashAlt} />

@@ -3,10 +3,11 @@ import { Button, Modal } from 'react-bootstrap';
 
 function TorderModal(props) {
   return (
-    <div>
+    <div id="torder-compute">
       <Button
+        // title="Compute T-order"
         variant="primary"
-        className="torder-compute-btn"
+        className="torder-primary-btn"
         onClick={props.toggleModal}>
         <span>Compute T-order</span>
       </Button>

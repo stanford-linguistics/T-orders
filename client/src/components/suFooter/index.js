@@ -1,7 +1,7 @@
 import React from 'react';
 
 const SuFooter = props => (
-  <div id="global-footer">
+  <div id="global-footer" className="torder-footer">
     <div className="container">
       <div className="row">
         <div id="bottom-logo" className="col-sm-12 col-md-2">
