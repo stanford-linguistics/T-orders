@@ -33,7 +33,7 @@ function MyTorderTable(props) {
                 <BarLoader
                   sizeUnit={'px'}
                   size={20}
-                  color={'#226657'}
+                  color={'#8c1515'}
                   loading={
                     torder.status === 'RUNNING' || torder.status === 'PENDING'
                   }
