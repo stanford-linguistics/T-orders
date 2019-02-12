@@ -5,7 +5,6 @@ function TorderModal(props) {
   return (
     <div id="torder-compute">
       <Button
-        // title="Compute T-order"
         variant="primary"
         className="torder-primary-btn"
         onClick={props.toggleModal}>
@@ -21,13 +20,13 @@ function TorderModal(props) {
         </Modal.Header>
         <Modal.Body>{props.children}</Modal.Body>
         <Modal.Footer>
-          <Button className="torder-compute-btn" onClick={props.toggleModal}>
+          <Button className="torder-primary-btn" onClick={props.toggleModal}>
             Cancel
           </Button>
           <Button
             form="compute-form"
             variant="primary"
-            className="torder-compute-btn"
+            className="torder-primary-btn"
             onClick={() => {
               props.submitTorderRequest(
                 document.getElementById('compute-form')

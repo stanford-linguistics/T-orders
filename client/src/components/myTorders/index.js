@@ -5,6 +5,7 @@ import { Container, Modal, Button, Table } from 'react-bootstrap';
 import TorderFormContainer from '../../containers/torderFormContainer';
 import { updateTorder, deleteTorder } from '../../modules/dataService/torders';
 import MyTorderTable from '../myTordersTable';
+import QuestionTooltip from '../questionTooltip';
 
 class MyTorders extends Component {
   constructor(props, context) {
@@ -114,10 +115,16 @@ class MyTorders extends Component {
         <h2>My T-orders</h2>
         <Container>
           {this.props.torders.length > 0 && (
-            <div>
+            <Container fluid id="torder-mytorders-inner-container">
               <p>
                 These are your recent T-orders. Please note that T-orders will
-                expire after three days.
+                expire after three days.{' '}
+                <QuestionTooltip title="T-order Expiration">
+                  <em>Expired t-orders are not able to be downloaded.</em>
+                  <br />
+                  T-orders that are expired can be set to be automatically
+                  deleted in the settings.
+                </QuestionTooltip>
               </p>
               <TorderFormContainer />
               <MyTorderTable
@@ -125,16 +132,16 @@ class MyTorders extends Component {
                 removeTorder={this.removeTorder}
                 viewTorder={this.viewTorder}
               />
-            </div>
+            </Container>
           )}
           {this.props.torders <= 0 && (
-            <div>
+            <Container>
               <p>
                 You do not have any recent T-orders. Click the button below to
                 get started.
               </p>
               <TorderFormContainer />
-            </div>
+            </Container>
           )}
         </Container>
 
@@ -203,7 +210,7 @@ class MyTorders extends Component {
             </Table>
           </Modal.Body>
           <Modal.Footer>
-            <Button className="torder-compute-btn" onClick={this.toggleModal}>
+            <Button className="torder-primary-btn" onClick={this.toggleModal}>
               close
             </Button>
           </Modal.Footer>

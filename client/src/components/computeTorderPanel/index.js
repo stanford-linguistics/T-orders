@@ -27,14 +27,14 @@ function ComputeTorderPanel(props) {
         />
         <Button
           variant="primary"
-          className="torder-compute-btn"
+          className="torder-primary-btn"
           onClick={props.resetConfig}>
           <span>Reset to default</span>
         </Button>
         <Button
           form="preferred-compute-form"
           variant="primary"
-          className="torder-compute-btn"
+          className="torder-primary-btn"
           onClick={() =>
             props.setPreferredConfig(
               document.getElementById('preferred-compute-form')

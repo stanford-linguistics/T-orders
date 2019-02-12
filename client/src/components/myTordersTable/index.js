@@ -5,18 +5,15 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faDownload,
   faTrashAlt,
-  faListAlt,
-  faArrowCircleDown
+  faListAlt
 } from '@fortawesome/free-solid-svg-icons';
-import TorderFormContainer from '../../containers/torderFormContainer';
 import Moment from 'react-moment';
 import 'moment-timezone';
 
 function MyTorderTable(props) {
   return (
-    <Container id="torder-mytorders-table">
-      {/* <TorderFormContainer /> */}
-      <Table responsive striped bordered hover>
+    <Container id="torder-mytorders-table-container" fluid>
+      <Table id="torder-mytorders-table" responsive striped bordered hover>
         <thead>
           <tr>
             <th>#</th>

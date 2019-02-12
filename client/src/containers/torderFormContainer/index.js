@@ -20,6 +20,7 @@ class TorderFormContainer extends Component {
       showModal: false,
       validated: false,
       name: '',
+      description: '',
       inputFile: null,
       showOptionalConfigs: false,
       optimizationMethod: this.props.preferredSettings.optimizationMethod,
@@ -100,6 +101,7 @@ class TorderFormContainer extends Component {
   resetState = () => {
     this.setState({
       name: '',
+      description: '',
       inputFile: null,
       validated: false,
       optimizationMethod: this.props.preferredSettings.optimizationMethod,

@@ -3,7 +3,7 @@ import { Collapse, Card } from 'react-bootstrap';
 
 function Panel(props) {
   return (
-    <Card key={props.panelKey}>
+    <Card className="torder-panel" key={props.panelKey}>
       <Card.Header
         onClick={() => props.togglePanel(props.panelKey)}
         data-event={props.panelKey}

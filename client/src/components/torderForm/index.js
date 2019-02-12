@@ -52,7 +52,7 @@ class TorderForm extends Component {
           <FormGroup>
             <Container>
               <Row>
-                <Col>
+                <Col id="torder-input-file-col">
                   <Form.Label>Input file</Form.Label>
                   <QuestionTooltip title="Input file">
                     <em>The input file must be in an excel format.</em>
@@ -61,7 +61,7 @@ class TorderForm extends Component {
                     excel file.
                   </QuestionTooltip>
                 </Col>
-                <Col>
+                <Col id="torder-sample-file-col">
                   <a href={process.env.PUBLIC_URL + '/sample.xls'} download>
                     Sample input file
                   </a>
