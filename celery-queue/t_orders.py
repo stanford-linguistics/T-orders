@@ -76,7 +76,7 @@ import os
 #                         output path for results (default: current script directory)
 #   --hg-feasible-mappings-only
 #                         Set HG feasible mappings only (default: False)
-#   --print-enteilment    Print the current enteiment to the console (default:
+#   --print-entailment    Print the current entailment to the console (default:
 #                         False)
 #   --optimization-method [{simplex,interior-point}]
 #                         The optimization method to use (default: simplex)
@@ -111,7 +111,7 @@ def Validate_arguments() :
     parser.add_argument("input", help="input excel file", metavar="<FILEPATH>", type=Extant_file)
     parser.add_argument("-o", "--output", dest="output_directory", help="output path for results (default: current script directory)", metavar="<FILEPATH>")
     parser.add_argument("--hg-feasible-mappings-only", dest="HG_feasible_mappings_only", default=False, action='store_true', help="Set HG feasible mappings only (default: False)")
-    parser.add_argument("--print-enteilment", dest="print_current_enteilment", default=False, action='store_true', help="Print the current enteiment to the console (default: False)")
+    parser.add_argument("--print-entailment", dest="print_current_entailment", default=False, action='store_true', help="Print the current entailment to the console (default: False)")
     parser.add_argument("--optimization-method", dest="optimization_method", nargs='?', default='simplex', choices=['simplex','interior-point'], help="The optimization method to use (default: simplex)")
     parser.add_argument("--bound-on-number-of-candidates", dest="bound_on_number_of_candidates_for_checking_ME_nontrivial_sufficient_condition", default=10, type=check_positive, help="Bound on number of candidates for checking ME nontrivial sufficient condition (default: 10)", metavar="<INTEGER>")
     parser.add_argument("--num-trials", dest="number_of_trials_for_ME_random_counterexample", default=10000, type=check_positive, help="Number of trials for ME random counterexample (default: 10000)", metavar="<INTEGER>")
@@ -149,8 +149,8 @@ excel_data_sheet = excel_data.sheet_by_index(0)
 #=================================================================================================
 output_prefix = Set_output_directory(args.output_directory) + "/"
 only_HG_feasible_mappings = args.HG_feasible_mappings_only
-print_the_current_enteilment = args.print_current_enteilment
-optimization_method = args.optimization_method #In some cases, it is better toreplace 'simplex' with 'interior-point'
+print_the_current_entailment = args.print_current_entailment
+optimization_method = args.optimization_method #In some cases, it is better to replace 'simplex' with 'interior-point'
 bound_on_number_of_candidates_for_checking_ME_nontrivial_sufficient_condition = args.bound_on_number_of_candidates_for_checking_ME_nontrivial_sufficient_condition
 number_of_trials_for_ME_random_counterexample = args.number_of_trials_for_ME_random_counterexample
 weight_bound_for_ME_random_counterexample = args.weight_bound_for_ME_random_counterexample
@@ -988,7 +988,7 @@ for x in Gen.keys():
             for x_hat in Gen.keys():
                 for y_hat in Gen[x_hat]:
                     if (x, y) != (x_hat, y_hat) :
-                        if print_the_current_enteilment == True :
+                        if print_the_current_entailment == True :
                             print str((x,y, x_hat, y_hat))
                         (OT_feasibility, HG_feasibility, OT_Torder, HG_Torder, ME_Torder) = Analyze_and_display(x, y, x_hat, y_hat)
 
@@ -1461,7 +1461,7 @@ def Produce_graph(superset_of_entailments, subset_of_entailments, set_of_special
 ##    cleaned_set_of_dotted_arrows = Remove_entailments_which_follow_by_transitivity(set_of_dotted_arrows).difference(set_of_solid_arrows)
 
     #Starts a graph
-    GRAPH = Digraph(file_name, engine='dot')
+    GRAPH = Digraph(file_name, engine='dot', format='png')
     GRAPH.graph_attr['compound'] = 'true' #this allows for arrows which start from or point to a subgraph rather than a node
 ##    GRAPH.graph_attr['concentrate'] = 'true'
 ##    GRAPH.graph_attr['splines'] = 'headport'
@@ -1514,9 +1514,9 @@ def Produce_graph(superset_of_entailments, subset_of_entailments, set_of_special
     #Closes the graph
     comment = 'label = "LEGEND: ' + legend + '"'
     GRAPH.body.append(comment)
-    #GRAPH.view()
-    GRAPH.save()
-
+    GRAPH.render()
+    #Rename rendered pngs
+    os.rename(os.path.join(file_name + '.gv.png'), os.path.join(file_name + '.png'))
 
 
 ##=================================================================================================
