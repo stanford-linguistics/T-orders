@@ -56,7 +56,7 @@ class TorderNavbar extends Component {
                   as={NavLink}
                   to="/documentation#references"
                   href="/documentation#references">
-                  Referances
+                  References
                 </NavDropdown.Item>
                 <NavDropdown.Item
                   as={NavLink}
