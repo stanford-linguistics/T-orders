@@ -35,7 +35,7 @@ def get_output_path(folder_id):
 
 def get_optional_args(hg_feasible_mappings_only, optimization_method, bound_on_number_of_candidates, num_trials, weight_bound, include_arrows):
     args_string = ''
-    if hg_feasible_mappings_only is not None:
+    if hg_feasible_mappings_only:
         args_string += '--hg-feasible-mappings-only '
     if optimization_method is not None:
         args_string += '--optimization-method ' + optimization_method + ' '
@@ -46,7 +46,7 @@ def get_optional_args(hg_feasible_mappings_only, optimization_method, bound_on_n
         args_string += '--num-trials ' + str(num_trials) + ' '
     if weight_bound is not None:
         args_string += '--weight-bound ' + str(weight_bound) + ' '
-    if include_arrows is not None:
+    if include_arrows:
         args_string += '--include-arrows'
     return args_string
 
