@@ -1,7 +1,15 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Container, Modal, Button, Table } from 'react-bootstrap';
+import {
+  Container,
+  Modal,
+  Button,
+  Table,
+  Image,
+  Tabs,
+  Tab
+} from 'react-bootstrap';
 import TorderFormContainer from '../../containers/torderFormContainer';
 import { updateTorder, deleteTorder } from '../../modules/dataService/torders';
 import MyTorderTable from '../myTordersTable';
@@ -160,54 +168,77 @@ class MyTorders extends Component {
                 <p>{this.state.torder.errorMessage}</p>
               </div>
             )}
-            <Table responsive striped bordered hover>
-              <thead>
-                <tr>
-                  <th>Parameter</th>
-                  <th>Value</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>
-                    <strong>Optimization method</strong>
-                  </td>
-                  <td>{this.state.torder.params.optimizationMethod}</td>
-                </tr>
-                <tr>
-                  <td>
-                    <strong>Bound on number of candidates</strong>
-                  </td>
-                  <td>{this.state.torder.params.boundOnNumberOfCandidates}</td>
-                </tr>
-                <tr>
-                  <td>
-                    <strong>Number of trials</strong>
-                  </td>
-                  <td>{this.state.torder.params.numTrials}</td>
-                </tr>
-                <tr>
-                  <td>
-                    <strong>Weight bound</strong>
-                  </td>
-                  <td>{this.state.torder.params.weightBound}</td>
-                </tr>
-                <tr>
-                  <td>
-                    <strong>Hg feasible mappings only</strong>
-                  </td>
-                  <td>
-                    {String(this.state.torder.params.hgFeasibleMappingsOnly)}
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <strong>Display arrows</strong>
-                  </td>
-                  <td>{String(this.state.torder.params.includeArrows)}</td>
-                </tr>
-              </tbody>
-            </Table>
+            {this.state.torder.status === 'SUCCESS' && (
+              <Tabs defaultActiveKey="params">
+                <Tab eventKey="params" title="Params">
+                  <Table responsive striped bordered hover>
+                    <thead>
+                      <tr>
+                        <th>Parameter</th>
+                        <th>Value</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>
+                          <strong>Optimization method</strong>
+                        </td>
+                        <td>{this.state.torder.params.optimizationMethod}</td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <strong>Bound on number of candidates</strong>
+                        </td>
+                        <td>
+                          {this.state.torder.params.boundOnNumberOfCandidates}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <strong>Number of trials</strong>
+                        </td>
+                        <td>{this.state.torder.params.numTrials}</td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <strong>Weight bound</strong>
+                        </td>
+                        <td>{this.state.torder.params.weightBound}</td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <strong>Hg feasible mappings only</strong>
+                        </td>
+                        <td>
+                          {String(
+                            this.state.torder.params.hgFeasibleMappingsOnly
+                          )}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <strong>Display arrows</strong>
+                        </td>
+                        <td>
+                          {String(this.state.torder.params.includeArrows)}
+                        </td>
+                      </tr>
+                    </tbody>
+                  </Table>
+                </Tab>
+                <Tab eventKey="graphs" title="Graphs">
+                  <div>
+                    {this.state.torder.images.map((image, index) => (
+                      <div key={index}>
+                        <h3>{image.name}</h3>
+                        <Image src={image.url} fluid />
+                      </div>
+                    ))}
+                  </div>
+                </Tab>
+                <Tab eventKey="notes" title="Notes" />
+              </Tabs>
+            )}
           </Modal.Body>
           <Modal.Footer>
             <Button className="torder-primary-btn" onClick={this.toggleModal}>

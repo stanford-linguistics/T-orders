@@ -8,7 +8,7 @@ import json
 ONE_HOUR = 1 * 60 * 60
 ONE_DAY = ONE_HOUR * 24
 #FOLDER_TTL = ONE_DAY * 3
-FOLDER_TTL = 5 * 60
+FOLDER_TTL = 20 * 60
 RESULTS_FOLDER = '/results'
 
 CELERY_BROKER_URL = os.environ.get(
@@ -63,6 +63,11 @@ def get_task_results_path(folder_id):
     return os.path.join(RESULTS_FOLDER, folder_id)
 
 
+def copy_graphs(folder_id):
+    results_directory = os.path.join(get_task_results_path(folder_id), 'output')
+    results_helper.copy_graphs(results_directory, folder_id)
+
+
 def zip_results(input_filename, folder_id):
     directory_to_zip = get_task_results_path(folder_id)
     zip_name = os.path.splitext(input_filename)[0] + '.zip'
@@ -105,6 +110,7 @@ def compute_t_orders(self, input_file_path,
     folder_id = self.request.id
     call_t_order(input_file_path, get_output_path(folder_id), hg_feasible_mappings_only,
                  optimization_method, bound_on_number_of_candidates, num_trials, weight_bound, include_arrows)
+    copy_graphs(folder_id)
     zip_results(input_filename, folder_id)
     result = Result(get_download_url(folder_id), FOLDER_TTL, get_expiration_on())
     clean_results(folder_id)

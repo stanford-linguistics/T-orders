@@ -2,6 +2,13 @@ import os
 import zipfile
 import shutil
 
+PUBLIC_FOLDER = '/public'
+GPRAH_IMAGE_EXTENSION = '.png'
+
+
+def create_directory(directory):
+    if not os.path.exists(directory):
+        os.makedirs(directory)
 
 def get_all_file_paths(directory):
     file_paths = []
@@ -11,6 +18,16 @@ def get_all_file_paths(directory):
             file_paths.append(filepath)
 
     return file_paths
+
+def copy_graphs(results_directory, folder_id):
+    if os.path.exists(results_directory):
+        public_folder = os.path.join(PUBLIC_FOLDER, folder_id)
+        create_directory(public_folder)
+        print(public_folder)
+        file_paths = get_all_file_paths(results_directory)
+        for file in file_paths:
+            if file.endswith(GPRAH_IMAGE_EXTENSION):
+                shutil.copy(file, public_folder)
 
 
 def zip_all(directory, zip_name):

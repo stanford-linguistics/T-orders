@@ -48,7 +48,8 @@ const TordersReducer = (state = initialState, action) => {
           id: action.payload.id,
           status: action.payload.status,
           link: action.payload.link,
-          errorMessage: action.payload.errorMessage
+          errorMessage: action.payload.errorMessage,
+          images: action.payload.images
         },
         torders: [...state.torders, action.payload],
         isPending: false
@@ -71,7 +72,8 @@ const TordersReducer = (state = initialState, action) => {
                 link: action.payload.link,
                 errorMessage: action.payload.errorMessage,
                 expiresOn: action.payload.expiresOn,
-                expiresIn: action.payload.expiresIn
+                expiresIn: action.payload.expiresIn,
+                images: action.payload.images
               }
             : torder
         )

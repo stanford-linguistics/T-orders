@@ -115,4 +115,5 @@ coverage*
 
 # t-orders
 /results
+/public
 .vscode

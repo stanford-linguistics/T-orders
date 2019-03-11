@@ -9,6 +9,7 @@ services:
      - "5001:5001"
     volumes:
      - ./results:/results
+     - ./public:/public
     depends_on:
       - redis
   torders-worker:
@@ -19,6 +20,7 @@ services:
       - redis
     volumes:
      - ./results:/results
+     - ./public:/public
   torders-worker-monitor:
     build:
       context: celery-queue
