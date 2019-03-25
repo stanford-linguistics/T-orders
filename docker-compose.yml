@@ -1,16 +1,12 @@
 version: "3"
 services:
-  proxy:
-    image: nginx:latest
+  nginx-proxy:
+    image: jwilder/nginx-proxy
     ports:
-      - 80:80
-      - 443:443
+      - "80:80"
     volumes:
-      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
-    links:
-      - "torders-api:api"
-      - "torders-worker-monitor:monitor"
-      - "torders-client:client"
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+      - /apps/docker-articles/nginx/vhost.d:/etc/nginx/vhost.d
   torders-api:
     build:
       context: ./api
@@ -21,12 +17,19 @@ services:
      - ./public:/public
     depends_on:
       - redis
+      - nginx-proxy
+    ports:
+      - "5001:80"
+    environment:
+      VIRTUAL_HOST: torders.stanford.edu/api
+      VIRTUAL_PORT: 5001
   torders-worker:
     build:
       context: celery-queue
       dockerfile: Dockerfile
     depends_on:
       - redis
+      - nginx-proxy
     volumes:
      - ./results:/results
      - ./public:/public
@@ -38,10 +41,23 @@ services:
     command:  -A tasks --port=5555 --broker=redis://redis:6379/0
     depends_on:
       - redis
+      - nginx-proxy
+    ports:
+      - "5555:80"
+    environment:
+      VIRTUAL_HOST: torders.stanford.edu/monitor
+      VIRTUAL_PORT: 5555
   torders-client:
     build:
       context: ./client
       dockerfile: Dockerfile
     restart: always
+    ports:
+      - "8080:80"
+    environment:
+      VIRTUAL_HOST: torders.stanford.edu
+      VIRTUAL_PORT: 8080
+    depends_on:
+      - nginx-proxy
   redis:
     image: redis

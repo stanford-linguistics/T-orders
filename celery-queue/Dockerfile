@@ -13,4 +13,6 @@ RUN apt-get update && apt-get upgrade -y && apt-get install -y \
 
 RUN pip install -r requirements.txt
 
+EXPOSE 5555
+
 ENTRYPOINT celery -A tasks worker --loglevel=info
