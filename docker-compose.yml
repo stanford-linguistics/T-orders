@@ -21,7 +21,7 @@ services:
     ports:
       - "5001:80"
     environment:
-      VIRTUAL_HOST: torders.stanford.edu/api
+      VIRTUAL_HOST: torders-api.stanford.edu
       VIRTUAL_PORT: 5001
   torders-worker:
     build:
@@ -45,7 +45,7 @@ services:
     ports:
       - "5555:80"
     environment:
-      VIRTUAL_HOST: torders.stanford.edu/monitor
+      VIRTUAL_HOST: torders-monitor.stanford.edu
       VIRTUAL_PORT: 5555
   torders-client:
     build:
