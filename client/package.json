@@ -1,7 +1,7 @@
 {
   "name": "t-orders",
   "private": true,
-  "homepage": "https://create-react-app-redux.now.sh",
+  "homepage": "http://torders.stanford.edu/",
   "scripts": {
     "deploy": "now && now alias",
     "start": "react-scripts start",
