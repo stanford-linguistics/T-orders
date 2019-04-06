@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Switch, withRouter } from 'react-router-dom';
+import { Route, Redirect, Switch, withRouter } from 'react-router-dom';
 import Home from '../home';
 import Documentation from '../documentation';
 import Navbar from '../navbar';
@@ -9,7 +9,7 @@ import SuHeader from '../suHeader';
 import { Container, Row, Col } from 'react-bootstrap';
 
 function getClassForRoute(path) {
-  if (path === '/' || path === '/home') {
+  if (path === '/home') {
     return 'torder-home-main-container';
   } else if (path === '/documentation') {
     return 'torder-docs-main-container';
@@ -33,7 +33,6 @@ const App = props => (
             <Row>
               <Col md="auto">
                 <Switch>
-                  <Route path="/" component={Home} />
                   <Route exact path="/home" component={Home} />
                   <Route
                     exact
@@ -41,6 +40,7 @@ const App = props => (
                     component={Documentation}
                   />
                   <Route exact path="/my-t-orders" component={MyTorders} />
+                  <Redirect from="*" to="/home" />
                 </Switch>
               </Col>
             </Row>
