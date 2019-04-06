@@ -13,12 +13,14 @@ services:
     labels:
       com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy: "true"
   letsencrypt:
-    image: jrcs/letsencrypt-nginx-proxy-companion:v1.5
+    image: jrcs/letsencrypt-nginx-proxy-companion
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - /apps/docker-articles/nginx/vhost.d:/etc/nginx/vhost.d
       - /apps/docker-articles/nginx/certs:/etc/nginx/certs:rw
       - /apps/docker-articles/nginx/html:/usr/share/nginx/html
+    depends_on:
+      - nginx-proxy
   torders-api:
     build:
       context: ./api
@@ -33,7 +35,7 @@ services:
     environment:
       VIRTUAL_HOST: torders-api.stanford.edu
       VIRTUAL_PORT: 5001
-      LETSENCRYPT_HOST: torders.stanford.edu
+      LETSENCRYPT_HOST: torders-api.stanford.edu
       LETSENCRYPT_EMAIL: jsolis@graycoltdevelopers.com
   torders-worker:
     build:
@@ -57,7 +59,7 @@ services:
     environment:
       VIRTUAL_HOST: torders-monitor.stanford.edu
       VIRTUAL_PORT: 5555
-      LETSENCRYPT_HOST: torders.stanford.edu
+      LETSENCRYPT_HOST: torders-monitor.stanford.edu
       LETSENCRYPT_EMAIL: jsolis@graycoltdevelopers.com
   torders-client:
     build:
