@@ -120,7 +120,30 @@ class MyTorders extends Component {
   render() {
     return (
       <Container id="torder-mytorders-container">
-        <h2>My T-orders</h2>
+        <h1>Compute T-orders</h1>
+        <p>
+          Upload your grammar spreadsheet and get CoGeTo to start computing by
+          clicking on the 'compute' button below.{' '}
+        </p>
+        <p>
+          {' '}
+          The excel spreadsheet should list inputs, candidates, and constraint
+          violations, in the usual format assumed by scripts for computational
+          constraint-based phonology.{' '}
+        </p>{' '}
+        <p>
+          {' '}
+          Download the{' '}
+          <a href={process.env.PUBLIC_URL + '/sample.xls'} download>
+            example grammar spreadsheet
+          </a>{' '}
+          to view the proper formatting.{' '}
+        </p>{' '}
+        <p>
+          {' '}
+          Change CoGeTo's configuration parameters by clicking "Optional
+          Configuration" when uploading the file.
+        </p>
         <Container>
           {this.props.torders.length > 0 && (
             <Container fluid id="torder-mytorders-inner-container">
@@ -152,7 +175,6 @@ class MyTorders extends Component {
             </Container>
           )}
         </Container>
-
         <Modal
           show={this.state.showModal}
           onHide={this.toggleModal}

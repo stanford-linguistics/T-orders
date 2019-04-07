@@ -1,10 +1,11 @@
 import React from 'react';
+import { Container, Row, Col } from 'react-bootstrap';
 
 const SuFooter = props => (
-  <div id="global-footer" className="torder-footer">
-    <div className="container">
-      <div className="row">
-        <div id="bottom-logo" className="col-sm-12 col-md-2">
+  <div id="torder-su-footer">
+    <Container>
+      <Row>
+        <Col>
           <a href="https://www.stanford.edu">
             <img
               src="https://www-media.stanford.edu/su-identity/images/footer-stanford-logo@2x.png"
@@ -13,26 +14,25 @@ const SuFooter = props => (
               height="49"
             />
           </a>
-        </div>
-
-        <div id="bottom-text">
-          <div className="col-xs-5 col-xs-offset-1 col-sm-12 col-sm-offset-0 col-md-10">
+        </Col>
+        <Col md={10}>
+          <Row>
             <ul id="primary-links">
-              <li className="home">
+              <li>
                 <a href="https://www.stanford.edu">Stanford Home</a>
               </li>
-              <li className="maps alt">
+              <li>
                 <a href="https://visit.stanford.edu/plan/">Maps & Directions</a>
               </li>
-              <li className="search-stanford">
+              <li>
                 <a href="https://www.stanford.edu/search/">Search Stanford</a>
               </li>
-              <li className="emergency alt">
+              <li>
                 <a href="https://emergency.stanford.edu">Emergency Info</a>
               </li>
             </ul>
-          </div>
-          <div className="col-xs-6 col-sm-12 col-md-10">
+          </Row>
+          <Row>
             <ul id="policy-links">
               <li>
                 <a
@@ -77,22 +77,17 @@ const SuFooter = props => (
                 </a>
               </li>
             </ul>
-          </div>
-          <div className="col-xs-12 col-md-10 col-md-offset-2">
-            <p className="copyright vcard">
-              &copy; <span className="fn org">Stanford University</span>,{' '}
-              <span className="adr">
-                {' '}
-                <span className="locality">Stanford</span>,{' '}
-                <span className="region">California</span>{' '}
-                <span className="postal-code">94305</span>
-              </span>
-              .
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
+          </Row>
+          <Row>
+            <ul id="copywrite">
+              <li>
+                &copy; <span>Stanford University</span>
+              </li>
+            </ul>
+          </Row>
+        </Col>
+      </Row>
+    </Container>
   </div>
 );
 

@@ -7,13 +7,15 @@ import MyTorders from '../myTorders';
 import SuFooter from '../suFooter';
 import SuHeader from '../suHeader';
 import { Container, Row, Col } from 'react-bootstrap';
+import ParticlesContainer from '../particlesContainer';
+import TorderFooter from '../torderFooter';
 
 function getClassForRoute(path) {
   if (path === '/home') {
     return 'torder-home-main-container';
   } else if (path === '/documentation') {
     return 'torder-docs-main-container';
-  } else if (path === '/my-t-orders') {
+  } else if (path === '/compute') {
     return 'torder-my-torders-main-container';
   } else {
     return null;
@@ -24,6 +26,7 @@ const App = props => (
   <div
     id="torder-main-container"
     className={getClassForRoute(props.location.pathname)}>
+    {props.location.pathname === '/home' && <ParticlesContainer />}
     <div id="su-wrap">
       <div id="su-content">
         <SuHeader />
@@ -39,7 +42,7 @@ const App = props => (
                     path="/documentation"
                     component={Documentation}
                   />
-                  <Route exact path="/my-t-orders" component={MyTorders} />
+                  <Route exact path="/compute" component={MyTorders} />
                   <Redirect from="*" to="/home" />
                 </Switch>
               </Col>
@@ -48,6 +51,7 @@ const App = props => (
         </main>
       </div>
     </div>
+    <TorderFooter />
     <SuFooter />
   </div>
 );

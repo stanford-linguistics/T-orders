@@ -1,9 +1,13 @@
-body {
+/* TORDER COLORS: 
+#fbfbf9; 
+#544948; 
+#2f2424; 
+#f9f6ef; 
+*****************/
+
+body,
+p {
   font-family: 'Source Sans Pro', sans-serif;
-  /* background-color: #fbfbf9; */
-  /* background-color: #544948; */
-  /* background-color: #2f2424; */
-  /* background-color: #f9f6ef; */
 }
 
 .sticky-nav {
@@ -14,55 +18,49 @@ body {
 h1,
 h2,
 h3 {
-  font-family: 'Source Serif Pro', serif;
+  font-family: 'Source Serif Pro', sans-serif;
 }
-
-p {
-  font-family: 'Source Sans Pro', sans-serif;
-}
-
-/* button {
-  font-family: 'Crimson Text', serif;
-} */
 
 a {
   color: #820000;
 }
 a:hover {
-  color: black;
-}
-
-#torder-main-container {
-  /* height: 100vh; */
+  color: #000;
 }
 
 #global-footer .container {
   padding-bottom: 0;
-  /* margin-top: 4em; */
+}
+.torder-jumbotron {
+  margin-bottom: 0;
+  margin-top: 6em;
+  margin-bottom: 6em;
+}
+
+#torder-home-headline,
+.torder-settings-btn:hover {
+  color: #8c1515;
 }
 
 #torder-home-headline {
-  color: #8c1515;
-  font-family: 'Crimson Text', serif;
+  font-family: 'Source Serif Pro', sans-serif;
+  font-size: 1.5em;
+  margin-bottom: 1em;
+
+  text-align: center;
+}
+
+.torder-settings-btn,
+.torder-settings-btn:hover {
+  border: none;
 }
 
 .torder-settings-btn {
   background-color: rgba(0, 0, 0, 0);
-  border: none;
-}
-
-.torder-settings-btn:hover {
-  background-color: #8c1515;
-  border: none;
 }
 
 .torder-home-main-container {
-  min-height: 850px;
-  height: 100vh;
-  background-image: url('../src/assets/images/background.png');
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
+  background-color: #464c50;
 }
 
 .torder-docs-main-container {
@@ -77,42 +75,30 @@ a:hover {
   min-height: 850px;
 }
 
-#torder-home-container {
-  margin-top: 10em;
-}
-
 #torder-home-content {
-  text-align: center;
+  text-align: left;
 }
 
 #torder-home-content h1 {
-  margin-top: 0;
-  font-size: 3em;
+  margin: 0;
+  font-size: 4em;
+  text-align: center;
 }
 
 #torder-home-content p {
-  padding: 0 3em;
-  margin-bottom: 3em;
+  padding: 0 1em;
+  margin-bottom: 1em;
 }
 
 .torder-home-bg-color {
-  background-color: #f4f4f4bb;
+  background-color: #f4f4f4;
 }
 
 #torder-mytorders-container {
-  /* margin-top: 5em; */
   background-color: #f4f4f4bb;
   width: 1000px;
-  /* text-align: center; */
   padding: 2em;
   margin: 2em;
-}
-
-#torder-mytorders-inner-container {
-  /* padding-right: 0;
-  padding-left: 0;
-  margin-right: auto;
-  margin-left: auto; */
 }
 
 #torder-mytorders-table-container {
@@ -121,33 +107,6 @@ a:hover {
   min-width: 600px;
   padding: 1em;
 }
-
-/* #torder-mytorders-table {
-  table-layout: fixed;
-  min-width: 800px;
-  width: 100%;
-  height: 100%;
-}
-
-#torder-mytorders-table tbody {
-  display: block;
-  overflow: auto;
-  max-height: 450px;
-}
-
-#torder-mytorders-table thead tr {
-  display: block;
-}
-
-#torder-mytorders-table thead {
-}
-
-#torder-mytorders-table th,
-#torder-mytorders-table td {
-  padding: 5px;
-  text-align: left;
-  width: 400px;
-} */
 
 .torder-primary-btn {
   background-color: #343a40 !important;
@@ -160,7 +119,6 @@ a:hover {
   background-color: #8c1515 !important;
   border: none;
   margin: 5px;
-  /* color: #8c1515; */
 }
 
 .torder-secondary-btn {
@@ -171,9 +129,7 @@ a:hover {
 }
 
 .torder-secondary-btn:hover {
-  /* background-color: #343a4000 !important; */
   border: 1px solid #343a40;
-  /* color: #343a40; */
   color: #8c1515;
   margin: 5px;
 }
@@ -219,4 +175,61 @@ svg.svg-inline--fa.fa-question-circle.fa-w-16.torder-info-icon {
 
 #torder-sample-file-col {
   text-align: right;
+}
+
+.torder-link-active {
+  color: #fff;
+}
+
+#torder-su-footer {
+  background-color: #8c1515;
+  padding: 3em 0;
+}
+
+#primary-links,
+#policy-links,
+#copywrite {
+  list-style-type: none;
+  margin-bottom: 0;
+}
+
+#primary-links li,
+#policy-links li,
+#copywrite li {
+  float: left;
+  padding: 0 1em;
+}
+
+#primary-links a:hover,
+#policy-links a:hover,
+#copywrite a:hover {
+  text-decoration: none;
+}
+
+#primary-links a,
+#policy-links a,
+#copywrite li {
+  color: #e3dfd5;
+}
+
+#torder-footer-sponsors {
+  padding: 1em;
+  /* height: 150px; */
+}
+
+#torder-footer-contact h4,
+#torder-footer-contact p {
+  color: #e3dfd5;
+}
+
+#torder-footer-contact p {
+  margin: 0;
+}
+
+#torder-footer-contact a {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+#torder-footer-contact hr {
+  border-top-color: #e3dfd5;
 }

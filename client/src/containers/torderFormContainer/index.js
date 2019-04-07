@@ -70,7 +70,7 @@ class TorderFormContainer extends Component {
       this.props.computeTorder(this.state.inputFile, config);
       this.resetState();
       this.toggleModal();
-      this.props.changePage('/my-t-orders');
+      this.props.changePage('/compute');
     }
     this.setState({
       validated: true
