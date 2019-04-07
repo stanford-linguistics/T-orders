@@ -11,20 +11,19 @@ const styles = {
 };
 
 const ParticlesContainer = props => (
-  <div style={styles}>
-    <Particles
-      params={{
-        particles: {
-          number: {
-            value: 100
-          },
-          size: {
-            value: 3
-          }
+  <Particles
+    style={styles}
+    params={{
+      particles: {
+        number: {
+          value: 100
+        },
+        size: {
+          value: 3
         }
-      }}
-    />
-  </div>
+      }
+    }}
+  />
 );
 
 export default ParticlesContainer;

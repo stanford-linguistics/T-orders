@@ -13,7 +13,7 @@ import TorderFooter from '../torderFooter';
 function getClassForRoute(path) {
   if (path === '/home') {
     return 'torder-home-main-container';
-  } else if (path === '/documentation') {
+  } else if (path === '/about') {
     return 'torder-docs-main-container';
   } else if (path === '/compute') {
     return 'torder-my-torders-main-container';
@@ -23,36 +23,34 @@ function getClassForRoute(path) {
 }
 
 const App = props => (
-  <div
-    id="torder-main-container"
-    className={getClassForRoute(props.location.pathname)}>
+  <div>
     {props.location.pathname === '/home' && <ParticlesContainer />}
-    <div id="su-wrap">
-      <div id="su-content">
-        <SuHeader />
-        <main>
-          <Navbar />
-          <Container>
-            <Row>
-              <Col md="auto">
-                <Switch>
-                  <Route exact path="/home" component={Home} />
-                  <Route
-                    exact
-                    path="/documentation"
-                    component={Documentation}
-                  />
-                  <Route exact path="/compute" component={MyTorders} />
-                  <Redirect from="*" to="/home" />
-                </Switch>
-              </Col>
-            </Row>
-          </Container>
-        </main>
+    <div
+      id="torder-main-container"
+      className={getClassForRoute(props.location.pathname)}>
+      <div id="su-wrap">
+        <div id="su-content">
+          <SuHeader />
+          <main>
+            <Navbar />
+            <Container>
+              <Row>
+                <Col md="auto">
+                  <Switch>
+                    <Route exact path="/home" component={Home} />
+                    <Route exact path="/about" component={Documentation} />
+                    <Route exact path="/compute" component={MyTorders} />
+                    <Redirect from="*" to="/home" />
+                  </Switch>
+                </Col>
+              </Row>
+            </Container>
+          </main>
+        </div>
       </div>
+      <TorderFooter />
+      <SuFooter />
     </div>
-    <TorderFooter />
-    <SuFooter />
   </div>
 );
 

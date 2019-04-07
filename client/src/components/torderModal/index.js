@@ -7,7 +7,8 @@ function TorderModal(props) {
       <Button
         variant="primary"
         className="torder-primary-btn"
-        onClick={props.toggleModal}>
+        onClick={props.toggleModal}
+        style={{ marginBottom: '2em' }}>
         <span>Compute T-order</span>
       </Button>
       <Modal

@@ -3,6 +3,8 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import {
   Container,
+  Row,
+  Col,
   Modal,
   Button,
   Table,
@@ -120,61 +122,68 @@ class MyTorders extends Component {
   render() {
     return (
       <Container id="torder-mytorders-container">
-        <h1>Compute T-orders</h1>
-        <p>
-          Upload your grammar spreadsheet and get CoGeTo to start computing by
-          clicking on the 'compute' button below.{' '}
-        </p>
-        <p>
-          {' '}
-          The excel spreadsheet should list inputs, candidates, and constraint
-          violations, in the usual format assumed by scripts for computational
-          constraint-based phonology.{' '}
-        </p>{' '}
-        <p>
-          {' '}
-          Download the{' '}
-          <a href={process.env.PUBLIC_URL + '/sample.xls'} download>
-            example grammar spreadsheet
-          </a>{' '}
-          to view the proper formatting.{' '}
-        </p>{' '}
-        <p>
-          {' '}
-          Change CoGeTo's configuration parameters by clicking "Optional
-          Configuration" when uploading the file.
-        </p>
-        <Container>
-          {this.props.torders.length > 0 && (
-            <Container fluid id="torder-mytorders-inner-container">
-              <p>
-                These are your recent T-orders. Please note that T-orders will
-                expire after three days.{' '}
-                <QuestionTooltip title="T-order Expiration">
-                  <em>Expired t-orders are not able to be downloaded.</em>
-                  <br />
-                  T-orders that are expired can be set to be automatically
-                  deleted in the settings.
-                </QuestionTooltip>
-              </p>
-              <TorderFormContainer />
-              <MyTorderTable
-                torders={this.props.torders}
-                removeTorder={this.removeTorder}
-                viewTorder={this.viewTorder}
-              />
-            </Container>
-          )}
-          {this.props.torders <= 0 && (
-            <Container>
-              <p>
-                You do not have any recent T-orders. Click the button below to
-                get started.
-              </p>
-              <TorderFormContainer />
-            </Container>
-          )}
-        </Container>
+        <Row>
+          <Col lg={{ span: 12 }}>
+            <h1>Compute</h1>
+            <hr />
+            <h6>Instructions:</h6>
+            <p>Upload your grammar excel spreadsheet to start computing.</p>
+            <p>The spreadsheet should list the following: </p>
+            <ul>
+              <li>inputs,</li>
+              <li>candidates,</li>
+              <li>and constraint violations</li>
+            </ul>
+            <p>
+              {' '}
+              Utilize usual formatting assumed by scripts for computational
+              constraint-based phonology.
+            </p>
+          </Col>
+          <Col lg={{ span: 12 }}>
+            <h6>Example:</h6>
+            <p>
+              Download this
+              <a href={process.env.PUBLIC_URL + '/sample.xls'} download>
+                {' '}
+                example{' '}
+              </a>
+              to view the proper formatting.
+            </p>
+            <h6>Configuration:</h6>
+            <p>Click "Optional Configuration" when uploading your file.</p>
+            <h6>Results:</h6>
+            {this.props.torders.length > 0 && (
+              <Container fluid id="torder-mytorders-inner-container">
+                <p>
+                  These are your recent T-orders. Please note that T-orders will
+                  expire after three days.{' '}
+                  <QuestionTooltip title="T-order Expiration">
+                    <em>Expired t-orders are not able to be downloaded.</em>
+                    <br />
+                    T-orders that are expired can be set to be automatically
+                    deleted in the settings.
+                  </QuestionTooltip>
+                </p>
+                <TorderFormContainer />
+                <MyTorderTable
+                  torders={this.props.torders}
+                  removeTorder={this.removeTorder}
+                  viewTorder={this.viewTorder}
+                />
+              </Container>
+            )}
+            {this.props.torders <= 0 && (
+              <Container id="results-container">
+                <p>
+                  <em>You do not have any recent T-orders.</em>
+                </p>
+                <TorderFormContainer />
+              </Container>
+            )}
+          </Col>
+        </Row>
+
         <Modal
           show={this.state.showModal}
           onHide={this.toggleModal}

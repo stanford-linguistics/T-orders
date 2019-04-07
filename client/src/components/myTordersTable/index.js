@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Container, Table, Row, Col } from 'react-bootstrap';
+import { Button, Table, Container } from 'react-bootstrap';
 import { BarLoader } from 'react-spinners';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -12,8 +12,8 @@ import 'moment-timezone';
 
 function MyTorderTable(props) {
   return (
-    <Container id="torder-mytorders-table-container" fluid>
-      <Table id="torder-mytorders-table" responsive striped bordered hover>
+    <Container id="torder-mytorders-table-container">
+      <Table id="torder-mytorders-table" responsive="lg" striped bordered hover>
         <thead>
           <tr>
             <th>#</th>
@@ -48,47 +48,39 @@ function MyTorderTable(props) {
                 )}
               </td>
               <td>
-                <Container>
-                  <Row>
-                    <Col>
-                      {torder.status === 'SUCCESS' && (
-                        <div>
-                          <a
-                            title="Download"
-                            className="btn torder-primary-btn"
-                            role="button"
-                            href={torder.link}
-                            download>
-                            <FontAwesomeIcon icon={faDownload} />
-                          </a>
-                        </div>
-                      )}
-                      {torder.status !== 'SUCCESS' && (
-                        <Button className="torder-primary-btn" disabled>
-                          <FontAwesomeIcon icon={faDownload} />
-                        </Button>
-                      )}
-                    </Col>
-                    <Col>
-                      <Button
-                        title="View Details"
-                        className="torder-primary-btn"
-                        value={torder}
-                        onClick={() => props.viewTorder(torder)}>
-                        <FontAwesomeIcon icon={faListAlt} />
-                      </Button>
-                    </Col>
-                    <Col>
-                      <Button
-                        title="delete"
-                        className="torder-primary-btn"
-                        value={torder}
-                        onClick={() => props.removeTorder(torder)}>
-                        <FontAwesomeIcon icon={faTrashAlt} />
-                      </Button>
-                    </Col>
-                  </Row>
-                </Container>
+                <div>
+                  {torder.status === 'SUCCESS' && (
+                    <div>
+                      <a
+                        title="Download"
+                        className="btn torder-primary-btn"
+                        role="button"
+                        href={torder.link}
+                        download>
+                        <FontAwesomeIcon icon={faDownload} />
+                      </a>
+                    </div>
+                  )}
+                  {torder.status !== 'SUCCESS' && (
+                    <Button className="torder-primary-btn" disabled>
+                      <FontAwesomeIcon icon={faDownload} />
+                    </Button>
+                  )}
+                  <Button
+                    title="View Details"
+                    className="torder-primary-btn"
+                    value={torder}
+                    onClick={() => props.viewTorder(torder)}>
+                    <FontAwesomeIcon icon={faListAlt} />
+                  </Button>
+                  <Button
+                    title="delete"
+                    className="torder-primary-btn"
+                    value={torder}
+                    onClick={() => props.removeTorder(torder)}>
+                    <FontAwesomeIcon icon={faTrashAlt} />
+                  </Button>
+                </div>
               </td>
             </tr>
           ))}

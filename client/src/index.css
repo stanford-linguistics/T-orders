@@ -5,9 +5,11 @@
 #f9f6ef; 
 *****************/
 
+/* PAGEWIDE STYLES */
+
 body,
 p {
-  font-family: 'Source Sans Pro', sans-serif;
+  font-family: 'Roboto', sans-serif;
 }
 
 .sticky-nav {
@@ -17,8 +19,11 @@ p {
 
 h1,
 h2,
-h3 {
-  font-family: 'Source Serif Pro', sans-serif;
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'Jacques Francois Shadow', cursive;
 }
 
 a {
@@ -28,27 +33,11 @@ a:hover {
   color: #000;
 }
 
-#global-footer .container {
-  padding-bottom: 0;
-}
-.torder-jumbotron {
-  margin-bottom: 0;
-  margin-top: 6em;
-  margin-bottom: 6em;
+#su-content {
+  padding: 0;
 }
 
-#torder-home-headline,
-.torder-settings-btn:hover {
-  color: #8c1515;
-}
-
-#torder-home-headline {
-  font-family: 'Source Serif Pro', sans-serif;
-  font-size: 1.5em;
-  margin-bottom: 1em;
-
-  text-align: center;
-}
+/* NAV */
 
 .torder-settings-btn,
 .torder-settings-btn:hover {
@@ -56,82 +45,95 @@ a:hover {
 }
 
 .torder-settings-btn {
-  background-color: rgba(0, 0, 0, 0);
+  background-color: rgba(0, 0, 0, 0) !important;
+}
+
+/* HOME PAGE */
+
+.torder-jumbotron {
+  margin: 6em 0;
+  padding: 3em 2em;
 }
 
 .torder-home-main-container {
   background-color: #464c50;
 }
 
+.torder-my-torders-main-container,
 .torder-docs-main-container {
-  background-image: url('../src/assets/images/shattered.png');
-  background-repeat: repeat;
-}
-
-.torder-my-torders-main-container {
   background-image: url('../src/assets/images/graphy.png');
   background-repeat: repeat;
-  height: 100vh;
-  min-height: 850px;
 }
 
-#torder-home-content {
-  text-align: left;
-}
-
-#torder-home-content h1 {
-  margin: 0;
-  font-size: 4em;
+#torder-home-content h1,
+#torder-mytorders-container h1,
+#torder-home-content h6 {
   text-align: center;
 }
 
-#torder-home-content p {
-  padding: 0 1em;
-  margin-bottom: 1em;
+#torder-home-content h1,
+#torder-mytorders-container h1,
+.torder-docs-section h1 {
+  margin: 0;
+  font-size: 3em;
+  text-align: center;
 }
 
-.torder-home-bg-color {
+#torder-home-content h6,
+#torder-mytorders-container h6,
+.torder-docs-section h6 {
+  font-family: 'Roboto', sans-serif;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+#torder-home-content h6,
+#torder-home-content p {
+  margin-bottom: 3em;
+}
+
+.torder-settings-btn:hover {
+  color: #8c1515;
+}
+
+.torder-home-bg-color,
+#torder-mytorders-container {
   background-color: #f4f4f4;
 }
 
 #torder-mytorders-container {
-  background-color: #f4f4f4bb;
-  width: 1000px;
-  padding: 2em;
-  margin: 2em;
+  margin: 6em 0;
+  padding: 3em;
 }
 
-#torder-mytorders-table-container {
-  max-height: 500px;
-  overflow: auto;
-  min-width: 600px;
-  padding: 1em;
+.torder-primary-btn,
+.torder-primary-btn:hover {
+  border: none;
+  margin: 5px;
 }
 
 .torder-primary-btn {
   background-color: #343a40 !important;
-  border: none;
-  margin: 5px;
   color: #fff !important;
 }
 
 .torder-primary-btn:hover {
   background-color: #8c1515 !important;
-  border: none;
+}
+
+.torder-secondary-btn,
+.torder-secondary-btn:hover {
+  border: 1px solid #343a40;
   margin: 5px;
 }
 
 .torder-secondary-btn {
   background-color: #343a4000 !important;
-  border: 1px solid #343a40;
   color: #343a40;
-  margin: 5px;
 }
 
 .torder-secondary-btn:hover {
-  border: 1px solid #343a40;
   color: #8c1515;
-  margin: 5px;
 }
 
 #torder-learn-more,
@@ -140,21 +142,37 @@ a:hover {
   vertical-align: top;
 }
 
+/* ABOUT PAGE */
+
 #torder-docs-container {
-  margin-top: 4em;
-  padding: 4rem;
   background-color: #f4f4f4;
-  margin-bottom: 4em;
+  margin: 6em 0;
+  padding: 3em;
 }
 
-.torder-docs-section {
-  padding-top: 55px;
+.torder-docs-section h6,
+#torder-mytorders-container h6 {
+  margin: 3em 1em 1em 0;
 }
 
-#torder-glossary-content {
-  overflow: scroll;
-  max-height: 450px;
+/* COMPUTE PAGE */
+
+#results-container {
+  margin: 3em;
 }
+
+#torder-mytorders-table-container {
+  max-height: 500px;
+  overflow: auto;
+  min-width: 600px;
+  padding: 1em;
+  display: block;
+}
+
+/* #torder-mytorders-table {
+  width: 100%;
+  margin-bottom: 1rem;
+} */
 
 .list-group-item.active {
   background-color: #8c1515;
@@ -169,6 +187,7 @@ svg.svg-inline--fa.fa-question-circle.fa-w-16.torder-info-icon {
 .torder-panel {
   margin: 10px;
 }
+
 #torder-input-file-col {
   padding: 0;
 }
@@ -181,40 +200,26 @@ svg.svg-inline--fa.fa-question-circle.fa-w-16.torder-info-icon {
   color: #fff;
 }
 
-#torder-su-footer {
-  background-color: #8c1515;
-  padding: 3em 0;
+/* FOOTERS */
+
+#torder-footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
-#primary-links,
-#policy-links,
-#copywrite {
-  list-style-type: none;
-  margin-bottom: 0;
-}
-
-#primary-links li,
-#policy-links li,
-#copywrite li {
-  float: left;
-  padding: 0 1em;
-}
-
-#primary-links a:hover,
-#policy-links a:hover,
-#copywrite a:hover {
-  text-decoration: none;
-}
-
-#primary-links a,
-#policy-links a,
-#copywrite li {
-  color: #e3dfd5;
-}
-
-#torder-footer-sponsors {
+.footer-item-container {
   padding: 1em;
-  /* height: 150px; */
+  margin: 1em;
+}
+
+.su-footer-item-container {
+  margin: 2em;
+}
+
+#torder-footer-contact h4 {
+  text-align: center;
+  font-family: 'Roboto', sans-serif;
 }
 
 #torder-footer-contact h4,
@@ -232,4 +237,31 @@ svg.svg-inline--fa.fa-question-circle.fa-w-16.torder-info-icon {
 
 #torder-footer-contact hr {
   border-top-color: #e3dfd5;
+}
+
+#torder-su-footer {
+  background-color: #8c1515;
+  padding: 3em 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+#primary-links,
+#policy-links,
+#copywrite {
+  list-style-type: none;
+  margin-bottom: 0;
+}
+
+#primary-links a:hover,
+#policy-links a:hover,
+#copywrite a:hover {
+  text-decoration: none;
+}
+
+#primary-links a,
+#policy-links a,
+#copywrite li {
+  color: #e3dfd5;
 }

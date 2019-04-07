@@ -10,19 +10,17 @@ const Home = props => (
       <Col lg={{ span: 6, offset: 3 }}>
         <Jumbotron className="torder-jumbotron torder-home-bg-color">
           <Container id="torder-home-content">
-            <h1>CoGeTo</h1>
-            <h3 id="torder-home-headline">
-              Compute T-orders <br />
-              in Constraint-Based Phonology
-            </h3>
-            <hr />
+            <h1>CoGeTo</h1> <hr />
+            <h6 id="torder-home-headline">
+              Compute T-orders in Constraint-Based Phonology
+            </h6>
             <p>
-              Welcome to CoGeTo, a suite of tools for typological analysis in
-              constraint-based phonology. CoGeTo exploits the rich convex
-              geometry underlying constraint-based phonology to extract
-              typological information without ever enumerating the typology.
-              These tools can thus be used to study very large categorical
-              typologies or infinite probabilistic typologies.
+              CoGeTo is a suite of tools for typological analysis in
+              constraint-based phonology. It exploits the rich convex geometry
+              underlying constraint-based phonology to extract typological
+              information without ever enumerating the typology. Thus, CoGeTo
+              can be used to study very large categorical typologies or infinite
+              probabilistic typologies.
             </p>
             <Row>
               <div className="col-sm-12 text-center">
@@ -36,7 +34,7 @@ const Home = props => (
                   <Button
                     variant="outline-secondary"
                     className="torder-secondary-btn"
-                    onClick={() => props.changePage('/documentation')}>
+                    onClick={() => props.changePage('/about')}>
                     <span>Learn More</span>
                   </Button>
                 </div>

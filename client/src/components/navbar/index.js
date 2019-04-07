@@ -30,7 +30,9 @@ class TorderNavbar extends Component {
         variant="dark"
         expand="sm">
         <Container>
-          <Navbar.Brand to="/">CoGeTo</Navbar.Brand>
+          <Navbar.Brand to="/" style={{ paddingLeft: 0.5 + 'em' }}>
+            CoGeTo
+          </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="mr-auto">
@@ -43,12 +45,10 @@ class TorderNavbar extends Component {
               </LinkContainer>
               <LinkContainer
                 exact
-                to="/documentation"
-                isActive={() =>
-                  this.isActiveRoute(activeRoute, '/documentation')
-                }
+                to="/about"
+                isActive={() => this.isActiveRoute(activeRoute, '/about')}
                 activeClassName="">
-                <Nav.Link active={false}>Documentation</Nav.Link>
+                <Nav.Link active={false}>About</Nav.Link>
               </LinkContainer>
               <LinkContainer
                 exact

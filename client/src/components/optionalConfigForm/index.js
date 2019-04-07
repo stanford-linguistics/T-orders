@@ -102,12 +102,12 @@ function OptionalConfigForm(props) {
           name="displayArrows"
           id="displayArrowsCheckbox"
           type="checkbox"
-          label="Display arrows"
+          label="Display arrows entailed by transitivity"
           inline
           checked={props.displayArrows}
           onChange={props.handleCheckBoxChanged}
         />
-        <QuestionTooltip title="Display arrows">
+        <QuestionTooltip title="Display arrows entailed by transitivity">
           This is the popover text for the display arrows field.
         </QuestionTooltip>
       </FormGroup>
