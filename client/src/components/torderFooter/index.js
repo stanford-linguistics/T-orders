@@ -3,9 +3,29 @@ import { Navbar, Image } from 'react-bootstrap';
 import CNRS_Logo from '../../assets/images/cnrs.svg';
 import ANR_LOGO from '../../assets/images/anr-logo.png';
 import GITHUB_LOGO from '../../assets/images/Professortocat_v2.png';
+import LING_SIG from '../../assets/images/ling_sig.png';
+import FRANCE_SIG from '../../assets/images/france_sig.png';
 
 const TorderFooter = props => (
   <Navbar id="torder-footer" bg="dark" variant="dark">
+    <div className="footer-item-container">
+      <a
+        href="http://www.cnrs.fr/"
+        title="Centre national de la recherche scientifique"
+        target="_blank"
+        rel="noopener noreferrer">
+        <Image width={200} src={LING_SIG} fluid />
+      </a>
+    </div>
+    <div className="footer-item-container">
+      <a
+        href="http://www.cnrs.fr/"
+        title="Centre national de la recherche scientifique"
+        target="_blank"
+        rel="noopener noreferrer">
+        <Image width={200} src={FRANCE_SIG} fluid />
+      </a>
+    </div>
     <div className="footer-item-container">
       <a
         href="http://www.cnrs.fr/"
