@@ -10,8 +10,8 @@ const TorderFooter = props => (
   <Navbar id="torder-footer" bg="dark" variant="dark">
     <div className="footer-item-container">
       <a
-        href="http://www.cnrs.fr/"
-        title="Centre national de la recherche scientifique"
+        href="https://linguistics.stanford.edu/"
+        title="Stanford University Department of Linguistics"
         target="_blank"
         rel="noopener noreferrer">
         <Image width={200} src={LING_SIG} fluid />
@@ -19,8 +19,8 @@ const TorderFooter = props => (
     </div>
     <div className="footer-item-container">
       <a
-        href="http://www.cnrs.fr/"
-        title="Centre national de la recherche scientifique"
+        href="https://francestanford.stanford.edu/"
+        title="France-Stanford Center"
         target="_blank"
         rel="noopener noreferrer">
         <Image width={200} src={FRANCE_SIG} fluid />
