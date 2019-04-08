@@ -162,17 +162,27 @@ a:hover {
 }
 
 #torder-mytorders-table-container {
-  max-height: 500px;
   overflow: auto;
-  min-width: 600px;
-  padding: 1em;
-  display: block;
 }
 
-/* #torder-mytorders-table {
+#torder-mytorders-table-wrapper {
+  max-height: 500px;
+}
+
+@media (max-width: 767px) {
+  #torder-mytorders-table-wrapper {
+    width: 650px;
+  }
+}
+
+#torder-mytorders-table {
   width: 100%;
   margin-bottom: 1rem;
-} */
+}
+
+#torder-mytorders-table tbody tr td {
+  white-space: nowrap;
+}
 
 .list-group-item.active {
   background-color: #8c1515;
