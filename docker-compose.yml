@@ -33,9 +33,9 @@ services:
       - redis
       - nginx-proxy
     environment:
-      VIRTUAL_HOST: torders-api.stanford.edu
+      VIRTUAL_HOST: cogeto-api.stanford.edu
       VIRTUAL_PORT: 5001
-      LETSENCRYPT_HOST: torders-api.stanford.edu
+      LETSENCRYPT_HOST: cogeto-api.stanford.edu
       LETSENCRYPT_EMAIL: jsolis@graycoltdevelopers.com
   torders-worker:
     build:
@@ -57,9 +57,9 @@ services:
       - redis
       - nginx-proxy
     environment:
-      VIRTUAL_HOST: torders-monitor.stanford.edu
+      VIRTUAL_HOST: cogeto-monitor.stanford.edu
       VIRTUAL_PORT: 5555
-      LETSENCRYPT_HOST: torders-monitor.stanford.edu
+      LETSENCRYPT_HOST: cogeto-monitor.stanford.edu
       LETSENCRYPT_EMAIL: jsolis@graycoltdevelopers.com
   torders-client:
     build:
@@ -67,9 +67,9 @@ services:
       dockerfile: Dockerfile
     restart: always
     environment:
-      VIRTUAL_HOST: torders.stanford.edu
+      VIRTUAL_HOST: cogeto.stanford.edu
       VIRTUAL_PORT: 80
-      LETSENCRYPT_HOST: torders.stanford.edu
+      LETSENCRYPT_HOST: cogeto.stanford.edu
       LETSENCRYPT_EMAIL: jsolis@graycoltdevelopers.com
     depends_on:
       - nginx-proxy

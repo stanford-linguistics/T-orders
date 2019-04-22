@@ -1,7 +1,7 @@
 {
   "name": "t-orders",
   "private": true,
-  "homepage": "https://torders.stanford.edu/",
+  "homepage": "https://cogeto.stanford.edu/",
   "scripts": {
     "deploy": "now && now alias",
     "start": "react-scripts start",
