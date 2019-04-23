@@ -84,7 +84,6 @@ class TorderFormContainer extends Component {
 
     function optionalInputsAreValid() {
       return (
-        form['optimizationMethod'].checkValidity() &&
         form['candidatesBound'].checkValidity() &&
         form['numTrials'].checkValidity() &&
         form['weightBound'].checkValidity()

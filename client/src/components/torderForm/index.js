@@ -23,7 +23,6 @@ class TorderForm extends Component {
     var that = this;
     if (this.props.validated && this.computeForm.current) {
       return (
-        that.computeForm.current['optimizationMethod'].checkValidity() &&
         that.computeForm.current['candidatesBound'].checkValidity() &&
         that.computeForm.current['numTrials'].checkValidity() &&
         that.computeForm.current['weightBound'].checkValidity()
