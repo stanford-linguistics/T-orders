@@ -4,6 +4,7 @@ from celery import Celery
 import results_helper
 import datetime
 import json
+import subprocess
 
 ONE_HOUR = 1 * 60 * 60
 ONE_DAY = ONE_HOUR * 24
@@ -17,6 +18,7 @@ CELERY_RESULT_BACKEND = os.environ.get(
 
 celery = Celery('tasks', broker=CELERY_BROKER_URL,
                 backend=CELERY_RESULT_BACKEND)
+
 
 class Result:
     def __init__(self, download_url, expires_in, expires_on):
@@ -55,7 +57,16 @@ def call_t_order(input_file_path, output_path, hg_feasible_mappings_only, optimi
                                       bound_on_number_of_candidates, num_trials, weight_bound, include_arrows)
     t_order_command = 'python t_orders.py ' + input_file_path + \
         ' --output ' + output_path + ' ' + optional_args
-    os.system(t_order_command)
+    try:
+        output = subprocess.check_output(
+            t_order_command, shell=True, stderr=subprocess.STDOUT)
+    except subprocess.CalledProcessError as err:
+        output = err.output
+        return_code = err.returncode
+        print('error message:', output)
+        print('returned value:', return_code)
+        raise ValueError(
+            'Something went wrong while trying to process your file.', output)
 
 
 def get_task_results_path(folder_id):
@@ -63,7 +74,8 @@ def get_task_results_path(folder_id):
 
 
 def copy_graphs(folder_id):
-    results_directory = os.path.join(get_task_results_path(folder_id), 'output')
+    results_directory = os.path.join(
+        get_task_results_path(folder_id), 'output')
     results_helper.copy_graphs(results_directory, folder_id)
 
 
@@ -88,6 +100,7 @@ def clean_results(folder_id):
 def get_download_url(folder_id):
     return '/results/' + folder_id + '/$value?external=True'
 
+
 def get_expiration_on():
     current_datetime = datetime.datetime.now()
     delta = datetime.timedelta(seconds=FOLDER_TTL)
@@ -111,7 +124,8 @@ def compute_t_orders(self, input_file_path,
                  optimization_method, bound_on_number_of_candidates, num_trials, weight_bound, include_arrows)
     copy_graphs(folder_id)
     zip_results(input_filename, folder_id)
-    result = Result(get_download_url(folder_id), FOLDER_TTL, get_expiration_on())
+    result = Result(get_download_url(folder_id),
+                    FOLDER_TTL, get_expiration_on())
     clean_results(folder_id)
     return result.toJSON()
 

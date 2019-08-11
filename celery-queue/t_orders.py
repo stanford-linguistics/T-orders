@@ -21,6 +21,8 @@ import warnings
 warnings.filterwarnings("ignore", message="numpy.dtype size changed")
 
 import sys
+reload(sys)
+sys.setdefaultencoding('utf8')
 import xlrd
 import xlwt
 import numpy as np
