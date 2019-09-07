@@ -15,12 +15,12 @@ const Home = props => (
               Compute T-orders in Constraint-Based Phonology
             </h6>
             <p>
-              CoGeTo is a suite of tools for typological analysis in
-              constraint-based phonology. It exploits the rich convex geometry
+              CoGeTo is a suite of tools that exploit the rich convex geometry
               underlying constraint-based phonology to extract typological
-              information without ever enumerating the typology. Thus, CoGeTo
-              can be used to study very large categorical typologies or infinite
-              probabilistic typologies.
+              information without ever enumerating the typology. These tools
+              thus allow you to analyze not only categorical typologies in OT
+              and HG, but also infinite probabilistic typologies in Stochastic
+              OT, Noisy HG, and Maxent.
             </p>
             <Row>
               <div className="col-sm-12 text-center">
@@ -35,7 +35,7 @@ const Home = props => (
                     variant="outline-secondary"
                     className="torder-secondary-btn"
                     onClick={() => props.changePage('/about')}>
-                    <span>Learn More</span>
+                    <span>About</span>
                   </Button>
                 </div>
               </div>

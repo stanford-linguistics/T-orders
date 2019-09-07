@@ -142,6 +142,10 @@ a:hover {
   vertical-align: top;
 }
 
+.cogeto-font {
+  font-family: 'Jacques Francois Shadow', cursive;
+}
+
 /* ABOUT PAGE */
 
 #torder-docs-container {
@@ -153,6 +157,11 @@ a:hover {
 .torder-docs-section h6,
 #torder-mytorders-container h6 {
   margin: 3em 1em 1em 0;
+}
+
+.uppercase-text {
+  text-transform: uppercase;
+  font-weight: bold;
 }
 
 /* COMPUTE PAGE */
@@ -274,4 +283,12 @@ svg.svg-inline--fa.fa-question-circle.fa-w-16.torder-info-icon {
 #policy-links a,
 #copywrite li {
   color: #e3dfd5;
+}
+
+.doc-list li {
+  padding-bottom: 8px;
+}
+
+.doc-header {
+  text-transform: none !important;
 }

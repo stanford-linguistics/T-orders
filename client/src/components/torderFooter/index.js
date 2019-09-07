@@ -48,7 +48,7 @@ const TorderFooter = props => (
       <h4>Contact</h4>
       <hr />
       <div>
-        <p>Arto Tapani Anttila</p>
+        <p>Arto Anttila</p>
         <p>
           <a
             href="mailto:anttila@stanford.edu"

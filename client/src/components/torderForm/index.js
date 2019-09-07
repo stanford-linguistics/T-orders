@@ -45,7 +45,7 @@ class TorderForm extends Component {
               type="text"
               name="name"
               onChange={this.props.handleInputChange}
-              placeholder="Enter a name for this t-order"
+              placeholder="Enter a name for this T-order"
             />
           </FormGroup>
           <FormGroup>
@@ -91,6 +91,18 @@ class TorderForm extends Component {
           </Button>
           <Collapse in={this.props.showOptionalConfigs}>
             <Container id="optional-configuration">
+              <p>
+                Optional Configuration allows you to change the value of various
+                parameters. (See{' '}
+                <a
+                  href="https://sites.google.com/site/magrigrg/home/cogeto"
+                  title="CoGeTo manual"
+                  target="_blank"
+                  rel="noopener noreferrer">
+                  CoGeTo manual
+                </a>{' '}
+                for details)
+              </p>
               <OptionalConfigForm
                 preferredSettings={this.props.preferredSettings}
                 handleInputChange={this.props.handleInputChange}

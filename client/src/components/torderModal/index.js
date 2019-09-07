@@ -9,7 +9,7 @@ function TorderModal(props) {
         className="torder-primary-btn"
         onClick={props.toggleModal}
         style={{ marginBottom: '2em' }}>
-        <span>Compute T-order</span>
+        <span>Upload Grammar</span>
       </Button>
       <Modal
         show={props.showModal}

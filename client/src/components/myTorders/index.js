@@ -127,37 +127,19 @@ class MyTorders extends Component {
             <h1>Compute</h1>
             <hr />
             <h6>Instructions:</h6>
-            <p>Upload your grammar excel spreadsheet to start computing.</p>
-            <p>The spreadsheet should list the following: </p>
-            <ul>
-              <li>inputs,</li>
-              <li>candidates,</li>
-              <li>and constraint violations</li>
-            </ul>
             <p>
-              {' '}
-              Utilize usual formatting assumed by scripts for computational
-              constraint-based phonology.
+              To upload your grammar spreadsheet and start{' '}
+              <span className="cogeto-font">CoGeTo</span>, click the button
+              below.
             </p>
           </Col>
           <Col lg={{ span: 12 }}>
-            <h6>Example:</h6>
-            <p>
-              Download this
-              <a href={process.env.PUBLIC_URL + '/sample.xls'} download>
-                {' '}
-                example{' '}
-              </a>
-              to view the proper formatting.
-            </p>
-            <h6>Configuration:</h6>
-            <p>Click "Optional Configuration" when uploading your file.</p>
             <h6>Results:</h6>
             {this.props.torders.length > 0 && (
               <Container fluid id="torder-mytorders-inner-container">
                 <p>
-                  These are your recent T-orders. Please note that T-orders will
-                  expire after three days.{' '}
+                  Your recent results are listed below. They will expire after
+                  three days.{' '}
                   <QuestionTooltip title="T-order Expiration">
                     <em>Expired t-orders are not able to be downloaded.</em>
                     <br />
