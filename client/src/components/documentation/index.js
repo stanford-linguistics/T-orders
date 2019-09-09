@@ -5,13 +5,26 @@ import { Link } from 'react-router-dom';
 const Documentation = () => (
   <Container id="torder-docs-container">
     <Container className="torder-docs-section">
-      <h1>About</h1>
-      <hr />
-      <h6 className="doc-header">In brief</h6>
+      <Container id="torder-home-content">
+        <h1>
+          <span className="cogeto-font">C</span>o
+          <span className="cogeto-font">G</span>e
+          <span className="cogeto-font">T</span>o
+        </h1>{' '}
+        <hr />
+        <h6 style={{ marginTop: 0 }}>
+          Convex Geometry Tools for typological analysis
+        </h6>
+      </Container>
+      <h6 className="doc-header" style={{ fontWeight: 'bold' }}>
+        In brief
+      </h6>
       <p>
-        <span className="cogeto-font">CoGeTo</span> is a web app that allows you
-        to work out the predictions of your linguistic theory. It provides a
-        suite of tools that exploit the rich convex geometry underlying
+        <span className="cogeto-font">C</span>o
+        <span className="cogeto-font">G</span>e
+        <span className="cogeto-font">T</span>o is a web app that allows you to
+        work out the predictions of your linguistic theory. It provides a suite
+        of tools that exploit the rich convex geometry underlying
         constraint-based phonology to extract typological information without
         ever enumerating the typology. These tools thus allow you to analyze not
         only categorical typologies in OT and HG, but also infinite
@@ -28,7 +41,9 @@ const Documentation = () => (
         strategy that gets around this problem is to enumerate, not the
         individual languages, grammars, or distributions, but the universals
         hidden in the typology (Greenberg 1963).{' '}
-        <span className="cogeto-font">CoGeTo</span> exploits the rich convex
+        <span className="cogeto-font">C</span>o
+        <span className="cogeto-font">G</span>e
+        <span className="cogeto-font">T</span>o exploits the rich convex
         geometry underlying constraint-based phonology to compute universals
         without enumerating the typology. The current implementation (version
         1.0) computes three types of universals:
@@ -41,7 +56,7 @@ const Documentation = () => (
         </li>
         <li>
           <span className="uppercase-text">Negative absolute universals</span>:
-          Which phonological structures are impossible/least prob- able in every
+          Which phonological structures are impossible/least probable in every
           language in the typology?
         </li>
         <li>
@@ -57,9 +72,14 @@ const Documentation = () => (
       <p>
         All you need is a grammar spreadsheet (.xls) in the OTSoft/OTHelp
         format, with inputs, candidates, and violations. A sample input file is
-        available here. You can upload your grammar on the{' '}
-        <Link to="/compute">Compute</Link> page and start running{' '}
-        <span className="cogeto-font">CoGeTo</span>.
+        available{' '}
+        <a href={process.env.PUBLIC_URL + '/sample.xls'} download>
+          here
+        </a>
+        . You can upload your grammar on the <Link to="/compute">Compute</Link>{' '}
+        page and start running <span className="cogeto-font">C</span>o
+        <span className="cogeto-font">G</span>e
+        <span className="cogeto-font">T</span>o.
       </p>
     </Container>
     <Container className="torder-docs-section">
@@ -73,8 +93,10 @@ const Documentation = () => (
           Here
         </a>{' '}
         you can find a manual that explains how to read the output produced by{' '}
-        <span className="cogeto-font">CoGeTo</span>. For questions or bug
-        reports, please contact us at{' '}
+        <span className="cogeto-font">C</span>o
+        <span className="cogeto-font">G</span>e
+        <span className="cogeto-font">T</span>o. For questions or bug reports,
+        please contact us at{' '}
         <a
           href="mailto:magrigrg@gmail.com"
           title="magrigrg@gmail.com"
@@ -95,7 +117,9 @@ const Documentation = () => (
     </Container>
     <Container className="torder-docs-section">
       <h6 className="doc-header">
-        Some work that uses <span className="cogeto-font">CoGeTo</span>
+        Some work that uses <span className="cogeto-font">C</span>o
+        <span className="cogeto-font">G</span>e
+        <span className="cogeto-font">T</span>o
       </h6>
       <ul className="doc-list">
         <li>
@@ -140,7 +164,9 @@ const Documentation = () => (
           title="https://cogeto.stanford.edu"
           target="_blank"
           rel="noopener noreferrer">
-          <span className="cogeto-font">CoGeTo</span>: Convex Geometry Tools for
+          <span className="cogeto-font">C</span>o
+          <span className="cogeto-font">G</span>e
+          <span className="cogeto-font">T</span>o: Convex Geometry Tools for
           typological analysis in categorical and probabilistic constraint-based
           phonology
         </a>{' '}

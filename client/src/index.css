@@ -17,14 +17,14 @@ p {
   top: 0;
 }
 
-h1,
+/* h1,
 h2,
 h3,
 h4,
 h5,
 h6 {
   font-family: 'Jacques Francois Shadow', cursive;
-}
+} */
 
 a {
   color: #820000;
@@ -290,5 +290,10 @@ svg.svg-inline--fa.fa-question-circle.fa-w-16.torder-info-icon {
 }
 
 .doc-header {
-  text-transform: none !important;
+  /* text-transform: none !important; */
+  font-weight: bold;
+}
+
+.centered {
+  text-align: center;
 }

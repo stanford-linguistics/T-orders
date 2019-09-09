@@ -31,7 +31,9 @@ class TorderNavbar extends Component {
         expand="sm">
         <Container>
           <Navbar.Brand to="/" style={{ paddingLeft: 0.5 + 'em' }}>
-            <span className="cogeto-font">CoGeTo</span>
+            <span className="cogeto-font">C</span>o
+            <span className="cogeto-font">G</span>e
+            <span className="cogeto-font">T</span>o
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">

@@ -122,22 +122,34 @@ class MyTorders extends Component {
   render() {
     return (
       <Container id="torder-mytorders-container">
+        <Container id="torder-home-content">
+          <h1>
+            <span className="cogeto-font">C</span>o
+            <span className="cogeto-font">G</span>e
+            <span className="cogeto-font">T</span>o
+          </h1>{' '}
+          <hr />
+          <h6 style={{ marginTop: 0 }}>
+            Convex Geometry Tools for typological analysis
+          </h6>
+        </Container>
         <Row>
           <Col lg={{ span: 12 }}>
-            <h1>Compute</h1>
-            <hr />
-            <h6>Instructions:</h6>
-            <p>
+            <p style={{ marginTop: '2em' }} className="centered">
               To upload your grammar spreadsheet and start{' '}
-              <span className="cogeto-font">CoGeTo</span>, click the button
-              below.
+              <span className="cogeto-font">C</span>o
+              <span className="cogeto-font">G</span>e
+              <span className="cogeto-font">T</span>o, click the button below.
             </p>
           </Col>
           <Col lg={{ span: 12 }}>
-            <h6>Results:</h6>
             {this.props.torders.length > 0 && (
-              <Container fluid id="torder-mytorders-inner-container">
-                <p>
+              <Container
+                className="centered"
+                fluid
+                id="torder-mytorders-inner-container">
+                <TorderFormContainer />
+                <p className="centered">
                   Your recent results are listed below. They will expire after
                   three days.{' '}
                   <QuestionTooltip title="T-order Expiration">
@@ -147,7 +159,7 @@ class MyTorders extends Component {
                     deleted in the settings.
                   </QuestionTooltip>
                 </p>
-                <TorderFormContainer />
+
                 <MyTorderTable
                   torders={this.props.torders}
                   removeTorder={this.removeTorder}
@@ -156,10 +168,7 @@ class MyTorders extends Component {
               </Container>
             )}
             {this.props.torders <= 0 && (
-              <Container id="results-container">
-                <p>
-                  <em>You do not have any recent T-orders.</em>
-                </p>
+              <Container fluid className="centered">
                 <TorderFormContainer />
               </Container>
             )}
