@@ -6,10 +6,11 @@ import datetime
 import json
 import subprocess
 
-ONE_HOUR = 1 * 60 * 60
+ONE_HOUR = 1 * 60 * 60  # seconds
 ONE_DAY = ONE_HOUR * 24
 FOLDER_TTL = ONE_DAY * 3
 RESULTS_FOLDER = '/results'
+PUBLIC_FOLDER = '/public'
 
 CELERY_BROKER_URL = os.environ.get(
     'CELERY_BROKER_URL', 'redis://localhost:6379'),
@@ -73,6 +74,10 @@ def get_task_results_path(folder_id):
     return os.path.join(RESULTS_FOLDER, folder_id)
 
 
+def get_graphs_path(folder_id):
+    return os.path.join(PUBLIC_FOLDER, folder_id)
+
+
 def copy_graphs(folder_id):
     results_directory = os.path.join(
         get_task_results_path(folder_id), 'output')
@@ -85,16 +90,24 @@ def zip_results(input_filename, folder_id):
     results_helper.zip_all(directory_to_zip, zip_name)
 
 
-def queue_delete_folder(folder_id):
+def queue_delete_results_folder(folder_id):
+    directory_to_delete = get_task_results_path(folder_id)
     celery.send_task("tasks.delete_folder", args=[
-                     folder_id], kwargs={}, countdown=FOLDER_TTL)
+                     directory_to_delete], kwargs={}, countdown=FOLDER_TTL)
+
+
+def queue_delete_graphs_folder(folder_id):
+    directory_to_delete = get_graphs_path(folder_id)
+    celery.send_task("tasks.delete_folder", args=[
+                     directory_to_delete], kwargs={}, countdown=FOLDER_TTL)
 
 
 def clean_results(folder_id):
     directory_to_clean = get_task_results_path(folder_id)
     results_helper.clean_directory(os.path.join(directory_to_clean, 'input'))
     results_helper.clean_directory(os.path.join(directory_to_clean, 'output'))
-    queue_delete_folder(folder_id)
+    queue_delete_results_folder(folder_id)
+    queue_delete_graphs_folder(folder_id)
 
 
 def get_download_url(folder_id):
@@ -131,6 +144,5 @@ def compute_t_orders(self, input_file_path,
 
 
 @celery.task(name='tasks.delete_folder')
-def delete_folder(folder_id):
-    directory_to_delete = get_task_results_path(folder_id)
+def delete_folder(directory_to_delete):
     results_helper.clean_directory(directory_to_delete)

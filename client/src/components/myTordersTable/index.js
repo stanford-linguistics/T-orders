@@ -69,6 +69,7 @@ function MyTorderTable(props) {
                       title="View Details"
                       className="torder-primary-btn"
                       value={torder}
+                      disabled={torder.status !== 'SUCCESS'}
                       onClick={() => props.viewTorder(torder)}>
                       <FontAwesomeIcon icon={faListAlt} />
                     </Button>
