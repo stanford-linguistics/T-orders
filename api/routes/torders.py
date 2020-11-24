@@ -26,7 +26,7 @@ def get_filename(directory, allowed_extensions):
         if file.rsplit('.', 1)[1].lower() in allowed_extensions:
             filename = file
             break
-            
+
     return filename
 
 
@@ -68,7 +68,8 @@ def compute_t_order(folder_id):
                                     params['numTrials'],
                                     params['weightBound'],
                                     params['includeArrows']], kwargs={}, task_id=folder_id)
-            link = url_for('routes.check_task', task_id=task.id, _external=True)
+            link = url_for('routes.check_task', task_id=task.id,
+                           _external=True, _scheme='https')
             return make_response(jsonify(id=task.id, name=name, description=params['description'], status=task.state, link=link, errorMessage=None, params=params), 201)
         else:
             return 'No file belonging to id: ' + folder_id + ' was found.', HTTP_404_NOT_FOUND

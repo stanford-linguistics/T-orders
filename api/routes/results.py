@@ -23,6 +23,7 @@ def get_filename(directory, extension):
             break
     return filename
 
+
 def directory_exists(folder_id):
     directory = os.path.join(app.config['RESULTS_FOLDER'], folder_id)
     return os.path.exists(directory)
@@ -60,10 +61,10 @@ def get_images(folder_id):
         if file.endswith(GPRAH_IMAGE_EXTENSION):
             head, tail = os.path.split(file)
             file_name = os.path.join(folder_id, tail)
-            image = Image(url_for('static', filename = file_name, _external=True), tail)
+            image = Image(
+                url_for('static', filename=file_name, _external=True, _scheme='https'), tail)
             images.append(image.__dict__)
     return images
-            
 
 
 @routes.route('/results/<string:task_id>')
@@ -77,7 +78,8 @@ def check_task(task_id: str) -> str:
     images = []
     if res.state == states.SUCCESS:
         if directory_exists(task_id):
-            link = url_for('routes.download_file', task_id=task_id, _external=True)
+            link = url_for('routes.download_file',
+                           task_id=task_id, _external=True, _scheme='https')
             result = json.loads(res.result)
             expiresIn = result['expires_in']
             expiresOn = result['expires_on']
@@ -92,11 +94,12 @@ def check_task(task_id: str) -> str:
         if directory_exists(task_id):
             directory = os.path.join(app.config['RESULTS_FOLDER'], folder_id)
             zip_filename = get_filename(
-            directory, app.config['OUTPUT_FILE_EXTENSION'])
+                directory, app.config['OUTPUT_FILE_EXTENSION'])
             if zip_filename != '':
                 status = SUCCESS
-                link = url_for('routes.download_file', task_id=task_id, _external=True)       
-        else :
+                link = url_for('routes.download_file',
+                               task_id=task_id, _external=True, _scheme='https')
+        else:
             status = 'EXPIRED'
 
     if res.state == states.FAILURE:
